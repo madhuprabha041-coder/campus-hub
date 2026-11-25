@@ -4,162 +4,651 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create College Event | Campus Hub</title>
+    <title>Create College Event | Smart College Connect</title>
 
     <style>
+        :root {
+            --navy: #14213d;
+            --blue: #2563eb;
+            --light-blue: #eff6ff;
+            --background: #f5f7fb;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --white: #ffffff;
+        }
+
         * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
 
         body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #eef2ff, #fdf2f8);
-            color: #1f2937;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
             min-height: 100vh;
-            padding: 40px 16px;
         }
 
-        .container {
-            max-width: 650px;
-            margin: 0 auto;
-            background: white;
-            padding: 32px;
-            border-radius: 18px;
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            text-align: center;
-            color: #4338ca;
-            margin-top: 0;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #6b7280;
-            margin-bottom: 28px;
-        }
-
-        label {
-            display: block;
-            margin: 18px 0 8px;
-            font-weight: bold;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d5db;
-            border-radius: 8px;
-            font-size: 15px;
-        }
-
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        input:focus, textarea:focus {
-            outline: 2px solid #818cf8;
-            border-color: #6366f1;
-        }
-
-        .submit-button, .back-button {
-            display: block;
-            width: 100%;
-            margin-top: 22px;
-            padding: 13px;
-            border: none;
-            border-radius: 8px;
-            text-align: center;
-            font-size: 16px;
+        a {
             text-decoration: none;
-            cursor: pointer;
         }
 
-        .submit-button {
-            background: #4f46e5;
+        /* Navigation */
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            color: var(--navy);
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: var(--blue);
+        }
+
+        .nav-link {
+            color: var(--blue);
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-link:hover {
+            color: var(--navy);
+        }
+
+        /* Main page */
+
+        .page {
+            max-width: 1120px;
+            margin: auto;
+            padding: 35px 22px 50px;
+        }
+
+        /* Campus banner */
+
+        .hero {
+            min-height: 220px;
+            padding: 35px 40px;
+            display: flex;
+            align-items: center;
+            border-radius: 18px;
+            overflow: hidden;
             color: white;
+            margin-bottom: 28px;
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(15, 31, 59, 0.95),
+                    rgba(15, 31, 59, 0.65)
+                ),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1600&q=85")
+                center 48% / cover no-repeat;
         }
 
-        .submit-button:hover {
-            background: #3730a3;
+        .hero-content {
+            max-width: 650px;
         }
 
-        .back-button {
-            background: #f3f4f6;
-            color: #374151;
+        .eyebrow {
+            display: inline-block;
+            padding: 7px 12px;
+            border-radius: 30px;
+            border: 1px solid #ffffff55;
+            background: #ffffff18;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 {
+            font-size: clamp(27px, 4vw, 37px);
+            line-height: 1.25;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 14px;
+            color: #e2e8f0;
+            line-height: 1.8;
+        }
+
+        /* Form layout */
+
+        .content-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(240px, 0.8fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .form-card,
+        .info-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.035);
+        }
+
+        .form-card {
+            padding: 32px;
+        }
+
+        .form-heading {
+            padding-bottom: 22px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .form-heading h2 {
+            color: var(--navy);
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .form-heading p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
         }
 
         .messages {
-            padding: 12px;
-            background: #fff7ed;
-            border-radius: 8px;
-            color: #9a3412;
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 13px 15px;
+            border-radius: 9px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 8px;
+            overflow-wrap: anywhere;
+        }
+
+        .message.error {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #991b1b;
+        }
+
+        .field {
+            margin-bottom: 22px;
+        }
+
+        .field label {
+            display: block;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 9px;
+        }
+
+        .field label span {
+            color: #dc2626;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            color: var(--text);
+            background: white;
+            font: inherit;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .field input {
+            min-height: 46px;
+        }
+
+        .field textarea {
+            min-height: 135px;
+            resize: vertical;
+            line-height: 1.7;
+        }
+
+        .field input:focus,
+        .field textarea:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .field input::placeholder,
+        .field textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        .field .hint {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+            margin-top: 7px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .button {
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 13px 18px;
+            border: none;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-1px);
+        }
+
+        .button-primary {
+            background: var(--blue);
+            color: white;
+            flex: 1;
+        }
+
+        .button-primary:hover {
+            background: #1d4ed8;
+        }
+
+        .button-secondary {
+            background: #f1f5f9;
+            color: #334155;
+            border: 1px solid var(--border);
+        }
+
+        .button-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* Right-side information panel */
+
+        .info-card {
+            overflow: hidden;
+        }
+
+        .info-image {
+            height: 180px;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(15, 31, 59, 0.05),
+                    rgba(15, 31, 59, 0.30)
+                ),
+                url("https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=900&q=85")
+                center / cover no-repeat;
+        }
+
+        .info-content {
+            padding: 23px;
+        }
+
+        .info-content h3 {
+            color: var(--navy);
+            font-size: 17px;
+            margin-bottom: 13px;
+        }
+
+        .info-content > p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .tip {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            margin-bottom: 17px;
+        }
+
+        .tip-icon {
+            width: 35px;
+            height: 35px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-blue);
+            border-radius: 9px;
+            font-size: 17px;
+        }
+
+        .tip strong {
+            display: block;
+            color: var(--navy);
+            font-size: 13px;
+            margin-bottom: 4px;
+        }
+
+        .tip p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .info-note {
+            margin-top: 20px;
+            padding: 13px;
+            border-radius: 9px;
+            background: var(--light-blue);
+            color: #1e40af;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        /* Footer */
+
+        footer {
+            background: white;
+            border-top: 1px solid var(--border);
+            padding: 21px;
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        @media (max-width: 800px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .info-card {
+                display: grid;
+                grid-template-columns: 0.8fr 1.2fr;
+            }
+
+            .info-image {
+                height: 100%;
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .navbar {
+                padding: 17px 5%;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .page {
+                padding: 22px 14px 35px;
+            }
+
+            .hero {
+                min-height: 210px;
+                padding: 25px;
+            }
+
+            .form-card {
+                padding: 23px 19px;
+            }
+
+            .info-card {
+                display: block;
+            }
+
+            .info-image {
+                height: 180px;
+                min-height: 0;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .form-actions .button {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
 <body>
-    <main class="container">
-        <h1>🎉 Create College Event</h1>
-        <p class="subtitle">
-            Share upcoming college activities with students.
-        </p>
 
-        {% if messages %}
-            {% for message in messages %}
-                <div class="messages">{{ message }}</div>
-            {% endfor %}
-        {% endif %}
-
-        <form method="POST">
-            {% csrf_token %}
-
-            <label for="title">Event Name</label>
-            <input
-                type="text"
-                id="title"
-                name="title"
-                placeholder="e.g. Annual Day"
-                required
-            >
-
-            <label for="description">Event Description</label>
-            <textarea
-                id="description"
-                name="description"
-                placeholder="Enter event details"
-                required
-            ></textarea>
-
-            <label for="event_date">Event Date and Time</label>
-            <input
-                type="datetime-local"
-                id="event_date"
-                name="event_date"
-                required
-            >
-
-            <label for="venue">Venue</label>
-            <input
-                type="text"
-                id="venue"
-                name="venue"
-                placeholder="e.g. College Auditorium"
-                required
-            >
-
-            <button type="submit" class="submit-button">
-                Publish Event
-            </button>
-        </form>
-
-        <a href="{% url 'faculty_dashboard' %}" class="back-button">
-            ← Back to Dashboard
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="logo">
+            Smart College <span>Connect</span>
         </a>
+
+        <a href="{% url 'faculty_dashboard' %}" class="nav-link">
+            ← Faculty Dashboard
+        </a>
+    </nav>
+
+    <main class="page">
+
+        <!-- Page banner -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="eyebrow">FACULTY PORTAL</div>
+
+                <h1>Create a College Event</h1>
+
+                <p>
+                    Bring your campus community together.
+                    Publish upcoming activities and share important
+                    event details with your students.
+                </p>
+            </div>
+        </section>
+
+        <div class="content-layout">
+
+            <!-- Event form -->
+            <section class="form-card">
+
+                <div class="form-heading">
+                    <h2>Event Information</h2>
+                    <p>
+                        Complete the details below to publish your
+                        college event.
+                    </p>
+                </div>
+
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="message
+                                {% if message.tags == 'error' %}error{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="field">
+                        <label for="title">
+                            Event Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            placeholder="e.g. Annual Day Celebration"
+                            maxlength="200"
+                            required
+                        >
+
+                        <p class="hint">
+                            Choose a clear, descriptive name for your event.
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <label for="description">
+                            Event Description <span>*</span>
+                        </label>
+
+                        <textarea
+                            id="description"
+                            name="description"
+                            placeholder="Describe the event, activities, audience, and other important details..."
+                            required
+                        ></textarea>
+
+                        <p class="hint">
+                            Include details that will help students understand
+                            what to expect.
+                        </p>
+                    </div>
+
+                    <div class="field">
+                        <label for="event_date">
+                            Event Date and Time <span>*</span>
+                        </label>
+
+                        <input
+                            type="datetime-local"
+                            id="event_date"
+                            name="event_date"
+                            required
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="venue">
+                            Venue <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="venue"
+                            name="venue"
+                            placeholder="e.g. College Auditorium"
+                            maxlength="200"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="button button-primary">
+                            Publish Event →
+                        </button>
+
+                        <a href="{% url 'faculty_dashboard' %}"
+                           class="button button-secondary">
+                            Cancel
+                        </a>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Event creation guidance -->
+            <aside class="info-card">
+                <div class="info-image"
+                     role="img"
+                     aria-label="College event gathering"></div>
+
+                <div class="info-content">
+                    <h3>Make Your Event Stand Out</h3>
+
+                    <p>
+                        A well-written event announcement helps students
+                        understand the activity and plan to participate.
+                    </p>
+
+                    <div class="tip">
+                        <div class="tip-icon">📌</div>
+                        <div>
+                            <strong>Clear Event Name</strong>
+                            <p>Use a name students can recognize easily.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip">
+                        <div class="tip-icon">📝</div>
+                        <div>
+                            <strong>Useful Description</strong>
+                            <p>Explain the purpose and important details.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip">
+                        <div class="tip-icon">🗓️</div>
+                        <div>
+                            <strong>Correct Date and Time</strong>
+                            <p>Check the schedule before publishing.</p>
+                        </div>
+                    </div>
+
+                    <div class="tip">
+                        <div class="tip-icon">📍</div>
+                        <div>
+                            <strong>Specific Venue</strong>
+                            <p>Mention the building, hall, or location.</p>
+                        </div>
+                    </div>
+
+                    <div class="info-note">
+                        💡 Review all event details before selecting
+                        <strong>Publish Event</strong>.
+                    </div>
+                </div>
+            </aside>
+
+        </div>
     </main>
+
+    <footer>
+        © 2026 Smart College Connect | Your College, One Platform
+    </footer>
+
+    {% include 'core/floating_buttons.html' %}
+
+    <script>
+        // Prevent selecting a past date and time in the browser.
+        // Django must still validate the date on the server.
+        const eventDateInput = document.getElementById("event_date");
+
+        function setMinimumEventDate() {
+            const now = new Date();
+            const localDateTime = new Date(
+                now.getTime() - now.getTimezoneOffset() * 60000
+            ).toISOString().slice(0, 16);
+
+            eventDateInput.min = localDateTime;
+        }
+
+        setMinimumEventDate();
+    </script>
+
 </body>
 </html>
 

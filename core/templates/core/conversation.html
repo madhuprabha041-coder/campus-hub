@@ -1,0 +1,561 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Messages | Smart College Connect</title>
+
+    <style>
+        :root {
+            --primary: #2457d6;
+            --primary-dark: #183fa8;
+            --navy: #14213d;
+            --background: #f4f7fc;
+            --white: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 25px 16px;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .chat-container {
+            max-width: 900px;
+            height: min(780px, calc(100vh - 100px));
+            min-height: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 12px 40px rgba(30, 50, 90, 0.08);
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 20px 25px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .back-icon {
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            color: var(--primary);
+            font-size: 21px;
+            transition: background 0.2s;
+        }
+
+        .back-icon:hover {
+            background: #eff6ff;
+        }
+
+        .avatar {
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            width: 47px;
+            height: 47px;
+            border-radius: 50%;
+            background: #eaf0ff;
+            color: var(--primary);
+            font-size: 21px;
+            font-weight: 750;
+        }
+
+        .user-info {
+            min-width: 0;
+        }
+
+        .user-info h1 {
+            color: var(--navy);
+            font-size: 18px;
+            font-weight: 750;
+            overflow-wrap: anywhere;
+        }
+
+        .user-info p {
+            color: var(--muted);
+            margin-top: 5px;
+            font-size: 12px;
+        }
+
+        .chat-label {
+            margin-left: auto;
+            padding: 8px 12px;
+            border-radius: 20px;
+            background: #eff6ff;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .alert-messages {
+            padding: 12px 22px 0;
+        }
+
+        .alert {
+            margin-bottom: 8px;
+            padding: 12px 14px;
+            border-radius: 9px;
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #b91c1c;
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .chat-messages {
+            flex: 1;
+            min-height: 0;
+            padding: 25px;
+            overflow-y: auto;
+            background:
+                radial-gradient(circle at top right, #eaf0ff 0, transparent 30%),
+                #f8faff;
+            scroll-behavior: smooth;
+        }
+
+        .date-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 0 22px;
+        }
+
+        .date-divider span {
+            padding: 7px 13px;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            background: white;
+            color: var(--muted);
+            font-size: 11px;
+        }
+
+        .message-row {
+            display: flex;
+            width: 100%;
+            margin-bottom: 19px;
+        }
+
+        .message-row.sent-row {
+            justify-content: flex-end;
+        }
+
+        .message-row.received-row {
+            justify-content: flex-start;
+        }
+
+        .message {
+            max-width: min(75%, 520px);
+            padding: 13px 16px 10px;
+            border-radius: 15px;
+            overflow-wrap: anywhere;
+            box-shadow: 0 2px 5px rgba(30, 50, 90, 0.04);
+        }
+
+        .sent {
+            background: var(--primary);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .received {
+            background: white;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-bottom-left-radius: 4px;
+        }
+
+        .sender-name {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        .sent .sender-name {
+            color: #dbeafe;
+        }
+
+        .received .sender-name {
+            color: var(--primary);
+        }
+
+        .message-text {
+            font-size: 14px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .message-time {
+            display: block;
+            margin-top: 8px;
+            font-size: 10px;
+            text-align: right;
+        }
+
+        .sent .message-time {
+            color: #dbeafe;
+        }
+
+        .received .message-time {
+            color: var(--muted);
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 250px;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            display: grid;
+            place-items: center;
+            width: 65px;
+            height: 65px;
+            margin-bottom: 17px;
+            border-radius: 20px;
+            background: #eaf0ff;
+            font-size: 29px;
+        }
+
+        .empty-state h2 {
+            margin-bottom: 8px;
+            color: var(--navy);
+            font-size: 19px;
+        }
+
+        .empty-state p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .composer {
+            padding: 18px 22px;
+            background: white;
+            border-top: 1px solid var(--border);
+        }
+
+        .composer-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .composer-box {
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+        }
+
+        textarea {
+            display: block;
+            flex: 1;
+            width: 100%;
+            min-width: 0;
+            min-height: 48px;
+            max-height: 130px;
+            resize: vertical;
+            padding: 13px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            background: #f8fafc;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.5;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(36, 87, 214, 0.10);
+            background: white;
+        }
+
+        .send-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 48px;
+            padding: 12px 19px;
+            border: none;
+            border-radius: 11px;
+            background: var(--primary);
+            color: white;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 750;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .send-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .composer-note {
+            margin-top: 10px;
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        .footer {
+            max-width: 900px;
+            margin: 17px auto 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .footer a {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .chat-container {
+                height: calc(100vh - 75px);
+                min-height: 450px;
+                border-radius: 14px;
+            }
+
+            .chat-header {
+                padding: 15px;
+                gap: 10px;
+            }
+
+            .back-icon {
+                width: 35px;
+                height: 35px;
+            }
+
+            .avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .user-info h1 {
+                font-size: 15px;
+            }
+
+            .chat-label {
+                display: none;
+            }
+
+            .chat-messages {
+                padding: 17px 13px;
+            }
+
+            .message {
+                max-width: 88%;
+                padding: 11px 13px;
+            }
+
+            .composer {
+                padding: 14px;
+            }
+
+            .composer-box {
+                gap: 8px;
+            }
+
+            .send-button {
+                padding: 12px;
+                font-size: 12px;
+            }
+
+            .send-text {
+                display: none;
+            }
+
+            .footer {
+                padding: 0 5px;
+                font-size: 11px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="chat-container">
+
+        <header class="chat-header">
+            <a
+                href="{% url 'dashboard' %}"
+                class="back-icon"
+                aria-label="Back to dashboard"
+                title="Back to dashboard"
+            >←</a>
+
+            <div class="avatar" aria-hidden="true">
+                {{ other_user.username|first|upper }}
+            </div>
+
+            <div class="user-info">
+                <h1>{{ other_user.get_full_name|default:other_user.username }}</h1>
+                <p>Smart College Connect · Direct Messages</p>
+            </div>
+
+            <div class="chat-label">💬 Private Chat</div>
+        </header>
+
+        {% if messages %}
+            <div class="alert-messages" aria-live="polite">
+                {% for message in messages %}
+                    <p class="alert">{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <section class="chat-messages" id="chatMessages" aria-label="Conversation messages">
+
+            <div class="date-divider">
+                <span>YOUR CONVERSATION</span>
+            </div>
+
+            {% for item in conversation_messages %}
+
+                <div class="message-row {% if item.sender_id == request.user.id %}sent-row{% else %}received-row{% endif %}">
+
+                    <article class="message {% if item.sender_id == request.user.id %}sent{% else %}received{% endif %}">
+
+                        <strong class="sender-name">
+                            {% if item.sender_id == request.user.id %}
+                                You
+                            {% else %}
+                                {{ item.sender.get_full_name|default:item.sender.username }}
+                            {% endif %}
+                        </strong>
+
+                        <p class="message-text">{{ item.message }}</p>
+
+                        <time class="message-time">
+                            {{ item.created_at|date:"d M Y, h:i A" }}
+                        </time>
+
+                    </article>
+                </div>
+
+            {% empty %}
+
+                <div class="empty-state">
+                    <div class="empty-icon">💬</div>
+                    <h2>Start a Conversation</h2>
+                    <p>
+                        There are no messages here yet.<br>
+                        Send a message to start connecting.
+                    </p>
+                </div>
+
+            {% endfor %}
+
+        </section>
+
+        <form method="POST" class="composer" id="messageForm">
+            {% csrf_token %}
+
+            <label for="messageInput" class="composer-label">
+                Write your message
+            </label>
+
+            <div class="composer-box">
+                <textarea
+                    id="messageInput"
+                    name="message"
+                    placeholder="Type your message here..."
+                    maxlength="5000"
+                    rows="1"
+                    required
+                ></textarea>
+
+                <button type="submit" class="send-button">
+                    <span class="send-text">Send Message</span>
+                    <span aria-hidden="true">➤</span>
+                </button>
+            </div>
+
+            <p class="composer-note">
+                Please keep messages respectful and relevant to your college community.
+            </p>
+        </form>
+
+    </main>
+
+    <footer class="footer">
+        <span>© 2026 Smart College Connect</span>
+        <a href="{% url 'dashboard' %}">← Back to Dashboard</a>
+    </footer>
+
+    <script>
+        const chatMessages = document.getElementById("chatMessages");
+        const messageInput = document.getElementById("messageInput");
+
+        // Keep the latest messages visible when the conversation opens.
+        if (chatMessages) {
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Automatically increase the input height as the user types.
+        if (messageInput) {
+            messageInput.addEventListener("input", function () {
+                this.style.height = "auto";
+                this.style.height = Math.min(this.scrollHeight, 130) + "px";
+            });
+        }
+    </script>
+
+</body>
+</html>

@@ -5,6 +5,9 @@ from . import views
 urlpatterns = [
     # Home and authentication
     path("", views.home, name="home"),
+    path("inbox/", views.inbox_view, name="inbox"),
+    path("conversation/<int:user_id>/",views.conversation_view,name="conversation",),
+    path("profile/", views.profile_view, name="profile"),
     path("register/", views.register, name="register"),
     path("login/", views.user_login, name="login"),
     path("logout/", views.user_logout, name="logout"),
@@ -13,6 +16,7 @@ urlpatterns = [
         views.logout_confirmation,
         name="logout_confirmation",
     ),
+    path("ai-assistant/", views.ai_assistant, name="ai_assistant"),
 
     # Dashboard
     path("dashboard/", views.dashboard, name="dashboard"),

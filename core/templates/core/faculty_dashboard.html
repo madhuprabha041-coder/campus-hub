@@ -1,12 +1,23 @@
- 
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculty Dashboard | Campus Hub</title>
+    <title>Faculty Dashboard | Smart College Connect</title>
 
     <style>
+        :root {
+            --navy: #14213d;
+            --blue: #2563eb;
+            --light-blue: #eff6ff;
+            --background: #f5f7fb;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --white: #ffffff;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,164 +25,419 @@
         }
 
         body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #0b1026;
-            color: white;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
             min-height: 100vh;
         }
 
-        nav {
-            padding: 20px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            background: #111832;
-            border-bottom: 1px solid #ffffff20;
-        }
-
-        .logo {
-            font-size: 26px;
-            font-weight: 800;
-            background: linear-gradient(90deg, #ff65d8, #8b83ff, #55eaff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        nav a, .back {
-            color: #70eaff;
+        a {
             text-decoration: none;
         }
 
+        /* Navigation */
+
+        .navbar {
+            background: var(--white);
+            padding: 17px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-size: 23px;
+            font-weight: 800;
+            color: var(--navy);
+        }
+
+        .logo span {
+            color: var(--blue);
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue);
+        }
+
+        .profile-link {
+            background: var(--light-blue);
+            padding: 10px 15px;
+            border-radius: 8px;
+        }
+
+        .logout-button {
+            background: var(--navy);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 16px;
+            cursor: pointer;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .logout-button:hover {
+            background: var(--blue);
+        }
+
+        /* Main container */
+
         .container {
-            max-width: 1100px;
+            max-width: 1200px;
             margin: auto;
-            padding: 45px 20px;
+            padding: 35px 22px 55px;
         }
 
-        .welcome {
-            padding: 35px;
+        /* Hero section with campus image */
+
+        .hero {
+            min-height: 330px;
             border-radius: 20px;
+            padding: 45px;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            color: white;
             background:
-                radial-gradient(circle at top right, #00d9ff22, transparent 40%),
-                linear-gradient(135deg, #252052, #171d3b);
-            border: 1px solid #9d8bff55;
-            margin-bottom: 35px;
+                linear-gradient(
+                    90deg,
+                    rgba(15, 31, 59, 0.96) 0%,
+                    rgba(15, 31, 59, 0.82) 53%,
+                    rgba(15, 31, 59, 0.25) 100%
+                ),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85")
+                center/cover no-repeat;
+            margin-bottom: 30px;
         }
 
-        .welcome h1 {
-            font-size: clamp(28px, 4vw, 40px);
-            margin-bottom: 12px;
+        .hero-content {
+            max-width: 650px;
+            position: relative;
+            z-index: 1;
         }
 
-        .welcome h1 span {
-            background: linear-gradient(90deg, #ff71d5, #54eaff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .eyebrow {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 7px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 18px;
         }
 
-        .welcome p {
-            color: #c0cbea;
-            line-height: 1.7;
-            margin-bottom: 22px;
+        .hero h1 {
+            font-size: clamp(29px, 4vw, 43px);
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .hero h1 span {
+            color: #93c5fd;
+        }
+
+        .hero p {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #e2e8f0;
+            max-width: 590px;
+            margin-bottom: 25px;
         }
 
         .button {
             display: inline-block;
-            padding: 13px 20px;
-            margin: 0 10px 10px 0;
+            padding: 12px 17px;
             border-radius: 9px;
-            background: linear-gradient(100deg, #913dff, #e33ec9);
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 700;
+            transition: 0.2s ease;
             border: none;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            margin: 0 8px 8px 0;
         }
 
         .button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px #913dff55;
         }
 
-        .button.materials {
-            background: linear-gradient(100deg, #087eaf, #10b9a5);
+        .button-primary {
+            background: var(--blue);
+            color: white;
         }
 
-        .button.events {
-            background: linear-gradient(100deg, #d97706, #ef4444);
+        .button-primary:hover {
+            background: #1d4ed8;
         }
 
-        h2 {
-            margin-bottom: 22px;
+        .button-white {
+            background: white;
+            color: var(--navy);
         }
 
-        .announcement {
-            padding: 25px;
-            margin-bottom: 18px;
-            border-radius: 14px;
-            background: #171e3a;
-            border: 1px solid #52608a66;
+        .button-outline {
+            color: var(--blue);
+            border: 1px solid #bfdbfe;
+            background: white;
         }
 
-        .announcement h3 {
-            color: #75eaff;
-            margin-bottom: 12px;
+        .button-outline:hover {
+            background: var(--light-blue);
         }
 
-        .announcement p {
-            color: #d2daf0;
-            line-height: 1.7;
-            white-space: pre-wrap;
+        /* Section headings */
+
+        .section {
+            margin-top: 34px;
         }
 
-        .date {
-            color: #aeb9df;
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .section-heading h2 {
+            font-size: 23px;
+            color: var(--navy);
+        }
+
+        .section-heading p {
+            color: var(--muted);
             font-size: 13px;
-            margin-top: 15px;
+            margin-top: 6px;
+        }
+
+        /* Quick access cards */
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .quick-card {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 25px;
+            border-radius: 15px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(15, 23, 42, 0.07);
+        }
+
+        .card-icon {
+            width: 49px;
+            height: 49px;
+            border-radius: 13px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 18px;
+        }
+
+        .icon-blue {
+            background: #dbeafe;
+        }
+
+        .icon-green {
+            background: #dcfce7;
+        }
+
+        .icon-orange {
+            background: #ffedd5;
+        }
+
+        .quick-card h3 {
+            color: var(--navy);
+            font-size: 17px;
+            margin-bottom: 9px;
+        }
+
+        .quick-card p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin-bottom: 18px;
+        }
+
+        .card-link {
+            color: var(--blue);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        /* Content cards */
+
+        .content-list {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .content-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 23px;
+            min-width: 0;
+        }
+
+        .content-card h3 {
+            font-size: 17px;
+            color: var(--navy);
+            margin-bottom: 12px;
+            overflow-wrap: anywhere;
+        }
+
+        .content-card .description {
+            font-size: 14px;
+            line-height: 1.8;
+            color: #475569;
+            white-space: pre-wrap;
+            overflow-wrap: anywhere;
+        }
+
+        .meta {
+            color: var(--muted);
+            font-size: 12px;
+            margin-top: 17px;
+            padding-top: 13px;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .download-link {
+            display: inline-block;
+            margin-top: 17px;
+            color: var(--blue);
+            font-size: 13px;
+            font-weight: 700;
         }
 
         .empty {
-            padding: 25px;
-            border-radius: 12px;
-            background: #171e3a;
-            color: #bdc8e5;
+            background: white;
+            border: 1px dashed #cbd5e1;
+            padding: 28px;
+            text-align: center;
+            border-radius: 14px;
+            color: var(--muted);
+            line-height: 1.8;
+            grid-column: 1 / -1;
         }
+
+        .empty strong {
+            display: block;
+            color: var(--navy);
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+        /* Django notifications */
 
         .messages {
-            margin-bottom: 20px;
-            color: #7cffc4;
+            margin-bottom: 25px;
         }
+
+        .message-alert {
+            background: #ecfdf5;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            border-radius: 9px;
+            padding: 13px 16px;
+            margin-bottom: 9px;
+            font-size: 14px;
+        }
+
+        .message-alert.error {
+            background: #fef2f2;
+            color: #991b1b;
+            border-color: #fecaca;
+        }
+
+        /* Footer */
 
         footer {
+            background: white;
+            border-top: 1px solid var(--border);
             text-align: center;
-            padding: 22px;
-            background: #080c1d;
-            color: #aeb9df;
-            margin-top: 30px;
+            padding: 24px 15px;
+            color: var(--muted);
+            font-size: 13px;
         }
 
-        @media (max-width: 600px) {
-            nav {
-                padding: 18px 5%;
+        @media (max-width: 800px) {
+            .quick-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .content-list {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding: 32px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .navbar {
+                padding: 17px 5%;
+            }
+
+            .nav-links {
+                gap: 14px;
             }
 
             .container {
-                padding: 25px 15px;
+                padding: 22px 15px 40px;
             }
 
-            .welcome {
-                padding: 24px;
+            .hero {
+                min-height: 380px;
+                padding: 25px;
+                background-position: center;
+            }
+
+            .hero p {
+                font-size: 14px;
+            }
+
+            .quick-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-heading h2 {
+                font-size: 20px;
             }
 
             .button {
-                display: block;
                 text-align: center;
-                margin-right: 0;
             }
         }
     </style>
@@ -179,128 +445,230 @@
 
 <body>
 
-    <nav>
-       
-<div>
-    <a href="{% url 'home' %}">Home</a>
-    &nbsp; | &nbsp;
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="{% url 'home' %}" class="logo">
+            Smart College <span>Connect</span>
+        </a>
 
-    <form method="POST"
-          action="{% url 'logout' %}"
-          style="display: inline;">
-        {% csrf_token %}
-        <button type="submit"
-                style="background: none;
-                       border: none;
-                       color: #70eaff;
-                       cursor: pointer;
-                       font-size: inherit;
-                       font-family: inherit;">
-            Logout
-        </button>
-    </form>
-</div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
 
+            <a href="{% url 'profile' %}" class="profile-link">
+                👤 My Profile
+            </a>
+
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit" class="logout-button">
+                    Logout
+                </button>
+            </form>
+        </div>
     </nav>
 
     <main class="container">
 
-        <section class="welcome">
-            <h1>
-                Welcome, <span>{{ request.user.username }}</span>! 👩‍🏫
-            </h1>
+        <!-- Welcome banner -->
+        <section class="hero">
+            <div class="hero-content">
+                <div class="eyebrow">FACULTY PORTAL</div>
 
-            <p>
-                This is your faculty dashboard. Share important college
-                updates, upload study materials, and publish college events
-                for your students.
-            </p>
+                <h1>
+                    Welcome back,<br>
+                    <span>{{ request.user.first_name|default:request.user.username }}</span>!
+                </h1>
 
-            <a href="{% url 'create_announcement' %}" class="button">
-                📢 Publish Announcement
-            </a>
+                <p>
+                    Manage your college announcements, share learning
+                    resources, and keep your students informed.
+                    Your faculty workspace brings everything together
+                    in one place.
+                </p>
 
-            <a href="{% url 'upload_material' %}" class="button materials">
-                📚 Upload Study Materials
-            </a>
+                <a href="{% url 'create_announcement' %}"
+                   class="button button-primary">
+                    + Publish Announcement
+                </a>
 
-            <a href="{% url 'create_event' %}" class="button events">
-                🎉 College Events
-            </a>
+                <a href="{% url 'profile' %}"
+                   class="button button-white">
+                    View My Profile
+                </a>
+            </div>
         </section>
 
+        <!-- Success and error messages -->
         {% if messages %}
             <div class="messages">
                 {% for message in messages %}
-                    <p>{{ message }}</p>
+                    <div class="message-alert
+                        {% if message.tags == 'error' %}error{% endif %}">
+                        {{ message }}
+                    </div>
                 {% endfor %}
             </div>
         {% endif %}
 
-        <section>
-            <h2>📢 Your Announcements</h2>
-
-            {% for announcement in announcements %}
-                <article class="announcement">
-                    <h3>{{ announcement.title }}</h3>
-
-                    <p>{{ announcement.message }}</p>
-
-                    <div class="date">
-                        Published:
-                        {{ announcement.created_at|date:"d M Y, h:i A" }}
-                    </div>
-                </article>
-            {% empty %}
-                <div class="empty">
-                    You haven't published any announcements yet.
-                    Click "Publish Announcement" to create your first one.
+        <!-- Quick access -->
+        <section class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>Quick Access</h2>
+                    <p>Manage your teaching activities from here.</p>
                 </div>
-            {% endfor %}
-        </section>
+            </div>
 
-        <section style="margin-top: 40px;">
-            <h2>📚 Your Study Materials</h2>
+            <div class="quick-grid">
 
-            {% for material in study_materials %}
-                <article class="announcement">
-                    <h3>{{ material.title }}</h3>
-
+                <article class="quick-card">
+                    <div class="card-icon icon-blue">📢</div>
+                    <h3>Announcements</h3>
                     <p>
-                        {{ material.description|default:"Study material uploaded by faculty." }}
+                        Share important notices, academic updates,
+                        and information with your college community.
                     </p>
-
-                    <div class="date">
-                        Uploaded:
-                        {{ material.uploaded_at|date:"d M Y, h:i A" }}
-                    </div>
-
-                    {% if material.file %}
-                        <a href="{{ material.file.url }}"
-                           class="button materials"
-                           download>
-                            ⬇ Download Material
-                        </a>
-                    {% endif %}
+                    <a href="{% url 'create_announcement' %}"
+                       class="card-link">
+                        Create Announcement →
+                    </a>
                 </article>
-            {% empty %}
-                <div class="empty">
-                    You haven't uploaded any study materials yet.
-                </div>
-            {% endfor %}
+
+                <article class="quick-card">
+                    <div class="card-icon icon-green">📚</div>
+                    <h3>Study Materials</h3>
+                    <p>
+                        Upload notes, assignments, and learning
+                        resources for students to access.
+                    </p>
+                    <a href="{% url 'upload_material' %}"
+                       class="card-link">
+                        Upload Materials →
+                    </a>
+                </article>
+
+                <article class="quick-card">
+                    <div class="card-icon icon-orange">🎓</div>
+                    <h3>College Events</h3>
+                    <p>
+                        Create and share information about college
+                        events, activities, and upcoming programs.
+                    </p>
+                    <a href="{% url 'create_event' %}"
+                       class="card-link">
+                        Manage Events →
+                    </a>
+                </article>
+
+            </div>
         </section>
 
-        <p style="margin-top: 25px;">
-            <a href="{% url 'home' %}" class="back">
+        <!-- Announcements -->
+        <section class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>📢 Your Announcements</h2>
+                    <p>Review the announcements you have published.</p>
+                </div>
+
+                <a href="{% url 'create_announcement' %}"
+                   class="button button-outline">
+                    + Add New
+                </a>
+            </div>
+
+            <div class="content-list">
+                {% for announcement in announcements %}
+                    <article class="content-card">
+                        <h3>{{ announcement.title }}</h3>
+
+                        <div class="description">{{ announcement.message }}</div>
+
+                        <div class="meta">
+                            Published:
+                            {{ announcement.created_at|date:"d M Y, h:i A" }}
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="empty">
+                        <strong>No announcements yet</strong>
+                        Publish your first announcement to keep students
+                        informed about important updates.
+                        <br><br>
+                        <a href="{% url 'create_announcement' %}"
+                           class="button button-primary">
+                            Create Announcement
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Study materials -->
+        <section class="section">
+            <div class="section-heading">
+                <div>
+                    <h2>📚 Your Study Materials</h2>
+                    <p>Resources you have shared with students.</p>
+                </div>
+
+                <a href="{% url 'upload_material' %}"
+                   class="button button-outline">
+                    + Upload Material
+                </a>
+            </div>
+
+            <div class="content-list">
+                {% for material in study_materials %}
+                    <article class="content-card">
+                        <h3>{{ material.title }}</h3>
+
+                        <div class="description">{{ material.description|default:"Study material uploaded by faculty." }}</div>
+
+                        <div class="meta">
+                            Uploaded:
+                            {{ material.uploaded_at|date:"d M Y, h:i A" }}
+                        </div>
+
+                        {% if material.file %}
+                            <a href="{{ material.file.url }}"
+                               class="download-link"
+                               download>
+                                ⬇ Download Study Material
+                            </a>
+                        {% endif %}
+                    </article>
+                {% empty %}
+                    <div class="empty">
+                        <strong>No study materials uploaded</strong>
+                        Upload your first set of notes or learning resources
+                        so students can access them.
+                        <br><br>
+                        <a href="{% url 'upload_material' %}"
+                           class="button button-primary">
+                            Upload Study Material
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Back link -->
+        <div style="margin-top: 30px;">
+            <a href="{% url 'home' %}" class="card-link">
                 ← Back to Home
             </a>
-        </p>
+        </div>
 
     </main>
 
     <footer>
-        © 2026 Campus Hub | Faculty Portal ✨
+        © 2026 Smart College Connect | Faculty Portal
+        <br>
+        Connecting faculty and students through technology.
     </footer>
+
+    {% include 'core/floating_buttons.html' %}
 
 </body>
 </html>

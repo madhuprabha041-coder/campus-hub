@@ -1,0 +1,646 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Manage your profile and connect with your college community through Smart College Connect.">
+    <title>My Profile | Smart College Connect</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #153e75;
+            --primary-dark: #0b1f3a;
+            --blue: #2563eb;
+            --text: #172b4d;
+            --muted: #64748b;
+            --background: #f4f7fb;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .navbar {
+            min-height: 74px;
+            padding: 14px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 3px 15px rgba(15, 23, 42, 0.04);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--blue));
+            font-size: 21px;
+        }
+
+        .nav-link {
+            padding: 10px 15px;
+            border-radius: 9px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            transition: background 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: #eff6ff;
+        }
+
+        .container {
+            width: min(1000px, 90%);
+            margin: 35px auto 65px;
+        }
+
+        .page-header {
+            position: relative;
+            overflow: hidden;
+            padding: 32px;
+            margin-bottom: 25px;
+            border-radius: 18px;
+            color: white;
+            background: linear-gradient(115deg, #0b1f3a, #1d4e89);
+            box-shadow: 0 12px 30px rgba(21, 62, 117, 0.12);
+        }
+
+        .page-header::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            top: -105px;
+            right: -40px;
+            border: 28px solid rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+        }
+
+        .profile-avatar {
+            display: grid;
+            place-items: center;
+            width: 70px;
+            height: 70px;
+            flex-shrink: 0;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            font-size: 35px;
+        }
+
+        .page-header h1 {
+            margin-bottom: 7px;
+            font-size: clamp(25px, 4vw, 34px);
+            line-height: 1.25;
+        }
+
+        .page-header p {
+            color: #dbeafe;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .card {
+            padding: 27px;
+            margin-bottom: 22px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.035);
+        }
+
+        .card-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 23px;
+            padding-bottom: 17px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-icon {
+            display: grid;
+            place-items: center;
+            width: 43px;
+            height: 43px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: #eff6ff;
+            font-size: 21px;
+        }
+
+        .card-heading h2 {
+            color: var(--primary-dark);
+            font-size: 19px;
+        }
+
+        .card-heading p {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .detail-box {
+            min-width: 0;
+            padding: 17px;
+            border: 1px solid #e8edf5;
+            border-radius: 11px;
+            background: #fbfdff;
+        }
+
+        .detail-label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .detail-value {
+            color: var(--primary-dark);
+            font-size: 15px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .role {
+            display: inline-flex;
+            align-items: center;
+            padding: 6px 12px;
+            border-radius: 20px;
+            color: #1d4ed8;
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: capitalize;
+        }
+
+        .person {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 20px 0;
+            border-bottom: 1px solid #edf0f5;
+        }
+
+        .person:first-of-type {
+            padding-top: 0;
+        }
+
+        .person:last-child {
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .person-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .person-name {
+            margin-bottom: 8px;
+            color: var(--primary-dark);
+            font-size: 16px;
+            font-weight: 750;
+            overflow-wrap: anywhere;
+        }
+
+        .person-email {
+            margin-bottom: 10px;
+            color: var(--muted);
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        .unread-message-box {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 8px 11px;
+            margin: 2px 0 10px;
+            color: #1d4ed8;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .no-unread {
+            margin: 4px 0 10px;
+            color: #64748b;
+            font-size: 12px;
+        }
+
+        .message-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 15px;
+            border-radius: 9px;
+            color: white;
+            background: var(--primary);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .message-btn:hover {
+            background: var(--blue);
+            transform: translateY(-1px);
+        }
+
+        .student-count {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 22px;
+            padding: 12px 15px;
+            border: 1px solid #dbeafe;
+            border-radius: 10px;
+            color: var(--primary);
+            background: #f5f9ff;
+            font-size: 13px;
+        }
+
+        .student-count strong {
+            font-size: 17px;
+        }
+
+        .empty-message {
+            padding: 22px 16px;
+            color: var(--muted);
+            background: #f8fafc;
+            border: 1px dashed #cbd5e1;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .warning-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 20px;
+            color: #92400e;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+        }
+
+        .warning-icon {
+            font-size: 23px;
+        }
+
+        .warning-card h3 {
+            margin-bottom: 6px;
+            font-size: 15px;
+        }
+
+        .warning-card p {
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        footer {
+            padding: 23px 15px;
+            color: #cbd5e1;
+            background: var(--primary-dark);
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 650px) {
+            .navbar {
+                padding: 12px 5%;
+            }
+
+            .logo {
+                font-size: 16px;
+                gap: 8px;
+            }
+
+            .logo-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+            }
+
+            .nav-link {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .container {
+                width: 92%;
+                margin-top: 23px;
+            }
+
+            .page-header {
+                padding: 24px 19px;
+                border-radius: 14px;
+            }
+
+            .profile-avatar {
+                width: 55px;
+                height: 55px;
+                border-radius: 15px;
+                font-size: 28px;
+            }
+
+            .card {
+                padding: 20px 17px;
+                border-radius: 13px;
+            }
+
+            .profile-details {
+                grid-template-columns: 1fr;
+                gap: 11px;
+            }
+
+            .person {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .message-btn {
+                width: 100%;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <a class="logo" href="{% url 'home' %}">
+            <span class="logo-icon">✦</span>
+            <span>Smart College Connect</span>
+        </a>
+
+        <a class="nav-link" href="{% url 'dashboard' %}">
+            ← Dashboard
+        </a>
+    </nav>
+
+    <main class="container">
+
+        <header class="page-header">
+            <div class="header-content">
+                <div class="profile-avatar">👤</div>
+
+                <div>
+                    <h1>My Profile</h1>
+                    <p>
+                        View your account information and connect
+                        with your college community.
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Profile Details -->
+        <section class="card">
+
+            <div class="card-heading">
+                <div class="card-icon">🪪</div>
+                <div>
+                    <h2>Personal Information</h2>
+                    <p>Your registered account and college details</p>
+                </div>
+            </div>
+
+            <div class="profile-details">
+
+                <div class="detail-box">
+                    <span class="detail-label">Full Name</span>
+                    <div class="detail-value">
+                        {{ profile.user.get_full_name|default:profile.user.username }}
+                    </div>
+                </div>
+
+                <div class="detail-box">
+                    <span class="detail-label">Email Address</span>
+                    <div class="detail-value">
+                        {{ profile.user.email|default:"Not provided" }}
+                    </div>
+                </div>
+
+                <div class="detail-box">
+                    <span class="detail-label">College</span>
+                    <div class="detail-value">
+                        {{ college.name|default:"College not selected" }}
+                    </div>
+                </div>
+
+                <div class="detail-box">
+                    <span class="detail-label">Account Role</span>
+                    <div>
+                        <span class="role">{{ profile.role }}</span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Faculty List for Students -->
+        {% if profile.role == "student" %}
+        <section class="card">
+
+            <div class="card-heading">
+                <div class="card-icon">👨‍🏫</div>
+                <div>
+                    <h2>Faculty Members</h2>
+                    <p>Connect with faculty members from your college</p>
+                </div>
+            </div>
+
+            {% for faculty in faculty_profiles %}
+            <div class="person">
+
+                <div class="person-info">
+                    <div class="person-name">
+                        {{ faculty.user.get_full_name|default:faculty.user.username }}
+                    </div>
+
+                    <div class="person-email">
+                        Email: {{ faculty.user.email|default:"Not provided" }}
+                    </div>
+
+                    {% if faculty.unread_count > 0 %}
+                        <div class="unread-message-box">
+                            💬 {{ faculty.unread_count }}
+                            New Message{% if faculty.unread_count != 1 %}s{% endif %}
+                        </div>
+                    {% else %}
+                        <div class="no-unread">
+                            No new messages
+                        </div>
+                    {% endif %}
+                </div>
+
+                <a class="message-btn"
+                   href="{% url 'conversation' faculty.user.id %}">
+                    💬 Open Chat
+                </a>
+
+            </div>
+            {% empty %}
+                <p class="empty-message">
+                    No faculty members from your college have registered yet.
+                </p>
+            {% endfor %}
+
+        </section>
+        {% endif %}
+
+        <!-- Student List for Faculty -->
+        {% if profile.role == "faculty" %}
+        <section class="card">
+
+            <div class="card-heading">
+                <div class="card-icon">🎓</div>
+                <div>
+                    <h2>Students in Your College</h2>
+                    <p>View registered students and message them directly</p>
+                </div>
+            </div>
+
+            <div class="student-count">
+                <span>👥</span>
+                <span>
+                    Total registered students:
+                    <strong>{{ student_count }}</strong>
+                </span>
+            </div>
+
+            {% for student in student_profiles %}
+            <div class="person">
+
+                <div class="person-info">
+                    <div class="person-name">
+                        {{ student.user.get_full_name|default:student.user.username }}
+                    </div>
+
+                    <div class="person-email">
+                        Email: {{ student.user.email|default:"Not provided" }}
+                    </div>
+
+                    {% if student.unread_count > 0 %}
+                        <div class="unread-message-box">
+                            💬 {{ student.unread_count }}
+                            New Message{% if student.unread_count != 1 %}s{% endif %}
+                        </div>
+                    {% else %}
+                        <div class="no-unread">
+                            No new messages
+                        </div>
+                    {% endif %}
+                </div>
+
+                <a class="message-btn"
+                   href="{% url 'conversation' student.user.id %}">
+                    💬 Open Chat
+                </a>
+
+            </div>
+            {% empty %}
+                <p class="empty-message">
+                    No students from your college have registered yet.
+                </p>
+            {% endfor %}
+
+        </section>
+        {% endif %}
+
+        <!-- College Assignment Warning -->
+        {% if not college %}
+        <section class="warning-card">
+            <div class="warning-icon">⚠️</div>
+            <div>
+                <h3>College Not Assigned</h3>
+                <p>
+                    Your profile does not have a college assigned.
+                    Please contact the administrator to update your college details.
+                </p>
+            </div>
+        </section>
+        {% endif %}
+
+    </main>
+
+    <footer>
+        Smart College Connect
+        <br>
+        Connecting Students, Faculty and Campus Life. © 2026
+    </footer>
+
+    {% include 'core/floating_buttons.html' %}
+
+</body>
+</html>

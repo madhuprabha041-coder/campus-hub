@@ -4,99 +4,590 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Submit Activity | Campus Hub</title>
+    <meta name="description" content="Submit your workshops, hackathons, competitions and achievements through Smart College Connect.">
+    <title>Submit Activity | Smart College Connect</title>
+
     <style>
-        * { box-sizing: border-box; }
-        body {
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 30px 15px;
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #0b1026;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #153e75;
+            --primary-dark: #0b1f3a;
+            --blue: #2563eb;
+            --background: #f3f6fb;
+            --text: #172b4d;
+            --muted: #64748b;
+            --border: #dbe3ef;
+            --white: #ffffff;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        nav {
+            min-height: 74px;
+            padding: 14px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 3px 15px rgba(15, 23, 42, 0.04);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
             color: white;
+            background: linear-gradient(135deg, var(--primary), var(--blue));
+            border-radius: 12px;
+            font-size: 21px;
         }
-        .container {
-            max-width: 650px;
-            margin: 30px auto;
+
+        .nav-link {
+            padding: 10px 14px;
+            border-radius: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            transition: background 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: #eff6ff;
+        }
+
+        main {
+            flex: 1;
+            width: min(1000px, 92%);
+            margin: 36px auto 55px;
+        }
+
+        .page-header {
+            position: relative;
+            overflow: hidden;
             padding: 30px;
-            background: #171e3a;
-            border: 1px solid #52608a66;
-            border-radius: 18px;
+            margin-bottom: 25px;
+            border-radius: 17px;
+            color: white;
+            background: linear-gradient(115deg, #0b1f3a, #1d4e89);
+            box-shadow: 0 12px 30px rgba(21, 62, 117, 0.12);
         }
-        h1 { color: #75eaff; }
+
+        .page-header::after {
+            content: "";
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            top: -100px;
+            right: -40px;
+            border: 28px solid rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            align-items: center;
+            gap: 17px;
+        }
+
+        .header-icon {
+            width: 65px;
+            height: 65px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 17px;
+            background: rgba(255, 255, 255, 0.13);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            font-size: 31px;
+        }
+
+        .page-header h1 {
+            margin-bottom: 8px;
+            font-size: clamp(25px, 4vw, 33px);
+        }
+
+        .page-header p {
+            max-width: 600px;
+            color: #dbeafe;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+
+        .content-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.5fr) minmax(220px, 0.8fr);
+            align-items: start;
+            gap: 23px;
+        }
+
+        .card {
+            padding: 28px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 4px 18px rgba(15, 23, 42, 0.035);
+        }
+
+        .card-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 20px;
+            margin-bottom: 23px;
+            border-bottom: 1px solid #e9eef5;
+        }
+
+        .card-icon {
+            width: 43px;
+            height: 43px;
+            flex-shrink: 0;
+            display: grid;
+            place-items: center;
+            border-radius: 12px;
+            background: #eff6ff;
+            font-size: 21px;
+        }
+
+        .card-heading h2 {
+            margin-bottom: 5px;
+            color: var(--primary-dark);
+            font-size: 19px;
+        }
+
+        .card-heading p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .messages {
+            padding: 13px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #bbf7d0;
+            border-radius: 9px;
+            color: #166534;
+            background: #f0fdf4;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .messages p + p {
+            margin-top: 5px;
+        }
+
+        .field {
+            margin-bottom: 19px;
+        }
+
         label {
             display: block;
-            margin: 18px 0 8px;
+            margin-bottom: 8px;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 700;
         }
-        input, textarea, select {
+
+        .field-hint {
+            display: block;
+            margin-top: 6px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+
+        input,
+        textarea,
+        select {
+            display: block;
             width: 100%;
-            padding: 12px;
-            border: 1px solid #52608a;
-            border-radius: 8px;
-            background: #0b1026;
-            color: white;
-            font-size: 15px;
+            min-height: 46px;
+            padding: 12px 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            outline: none;
+            color: var(--text);
+            background: white;
+            font-family: inherit;
+            font-size: 13px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        textarea { min-height: 110px; }
-        button, .back {
-            display: inline-block;
-            margin-top: 22px;
-            padding: 12px 18px;
-            border: 0;
-            border-radius: 8px;
-            background: linear-gradient(100deg, #913dff, #e33ec9);
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        textarea {
+            min-height: 145px;
+            resize: vertical;
+            line-height: 1.7;
+        }
+
+        .submit-btn {
+            width: 100%;
+            min-height: 48px;
+            padding: 13px 17px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 9px;
             color: white;
-            font-weight: bold;
-            text-decoration: none;
+            background: linear-gradient(100deg, var(--primary), var(--blue));
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 800;
             cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .back { background: #087eaf; }
-        .messages { color: #7cffc4; margin-top: 15px; }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.2);
+        }
+
+        .side-card {
+            overflow: hidden;
+        }
+
+        .side-banner {
+            display: grid;
+            place-items: center;
+            min-height: 155px;
+            margin: -28px -28px 23px;
+            background:
+                linear-gradient(135deg, rgba(11, 31, 58, 0.85), rgba(37, 99, 235, 0.65)),
+                url("https://images.unsplash.com/photo-1523580494863-6f3031224c94?auto=format&fit=crop&w=800&q=80")
+                center / cover no-repeat;
+            color: white;
+            font-size: 46px;
+        }
+
+        .side-card h2 {
+            margin-bottom: 10px;
+            color: var(--primary-dark);
+            font-size: 18px;
+        }
+
+        .side-card > p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .tips {
+            list-style: none;
+            display: grid;
+            gap: 16px;
+            margin-top: 22px;
+        }
+
+        .tips li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #475569;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .tip-icon {
+            flex-shrink: 0;
+            font-size: 17px;
+        }
+
+        .privacy-note {
+            padding: 13px;
+            margin-top: 22px;
+            border-radius: 9px;
+            color: #1e40af;
+            background: #eff6ff;
+            font-size: 11px;
+            line-height: 1.8;
+        }
+
+        footer {
+            padding: 19px 15px;
+            color: #cbd5e1;
+            background: var(--primary-dark);
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 760px) {
+            main {
+                margin-top: 24px;
+            }
+
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .side-banner {
+                min-height: 130px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 12px 5%;
+            }
+
+            .brand {
+                gap: 8px;
+                font-size: 15px;
+            }
+
+            .brand-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+            }
+
+            .nav-link {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            main {
+                width: 93%;
+                margin-top: 20px;
+            }
+
+            .page-header {
+                padding: 23px 18px;
+            }
+
+            .header-icon {
+                width: 53px;
+                height: 53px;
+                border-radius: 13px;
+                font-size: 26px;
+            }
+
+            .page-header p {
+                font-size: 12px;
+            }
+
+            .card {
+                padding: 21px 18px;
+            }
+
+            .side-banner {
+                margin: -21px -18px 20px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <main class="container">
-        <h1>🎯 Submit Student Activity</h1>
-        <p>Share your workshops, hackathons, competitions, and achievements.</p>
 
-        {% if messages %}
-            {% for message in messages %}
-                <p class="messages">{{ message }}</p>
-            {% endfor %}
-        {% endif %}
-
-        <form method="POST">
-            {% csrf_token %}
-
-            <label for="title">Activity Title</label>
-            <input id="title" name="title" required
-                   placeholder="e.g. National Coding Hackathon">
-
-            <label for="description">Description</label>
-            <textarea id="description" name="description" required
-                      placeholder="Describe your participation"></textarea>
-
-            <label for="activity_type">Activity Type</label>
-            <select id="activity_type" name="activity_type" required>
-                <option value="">Select activity type</option>
-                <option value="workshop">Workshop</option>
-                <option value="hackathon">Hackathon</option>
-                <option value="competition">Competition</option>
-                <option value="cultural">Cultural Activity</option>
-                <option value="sports">Sports</option>
-                <option value="other">Other</option>
-            </select>
-
-            <label for="activity_date">Activity Date</label>
-            <input id="activity_date" name="activity_date"
-                   type="date" required>
-
-            <button type="submit">Submit Activity</button>
-        </form>
-
-        <br>
-        <a class="back" href="{% url 'student_dashboard' %}">
-            ← Back to Dashboard
+    <nav>
+        <a class="brand" href="{% url 'home' %}">
+            <span class="brand-icon">✦</span>
+            <span>Smart College Connect</span>
         </a>
+
+        <a class="nav-link" href="{% url 'student_dashboard' %}">
+            ← Dashboard
+        </a>
+    </nav>
+
+    <main>
+        <header class="page-header">
+            <div class="header-content">
+                <div class="header-icon">🎯</div>
+                <div>
+                    <h1>Submit Student Activity</h1>
+                    <p>
+                        Showcase your workshops, hackathons, competitions,
+                        sports, cultural activities and achievements.
+                    </p>
+                </div>
+            </div>
+        </header>
+
+        <div class="content-layout">
+
+            <section class="card">
+                <div class="card-heading">
+                    <div class="card-icon">📝</div>
+                    <div>
+                        <h2>Activity Details</h2>
+                        <p>Fill in the information about your activity.</p>
+                    </div>
+                </div>
+
+                {% if messages %}
+                    <div class="messages" role="status" aria-live="polite">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="field">
+                        <label for="title">Activity Title</label>
+                        <input
+                            id="title"
+                            name="title"
+                            type="text"
+                            maxlength="200"
+                            placeholder="e.g. National Coding Hackathon"
+                            required
+                        >
+                        <span class="field-hint">
+                            Enter a short and meaningful title.
+                        </span>
+                    </div>
+
+                    <div class="field">
+                        <label for="description">Description</label>
+                        <textarea
+                            id="description"
+                            name="description"
+                            placeholder="Describe your participation, what you learned, and your achievements..."
+                            required
+                        ></textarea>
+                    </div>
+
+                    <div class="field">
+                        <label for="activity_type">Activity Type</label>
+                        <select id="activity_type" name="activity_type" required>
+                            <option value="">Select activity type</option>
+                            <option value="workshop">Workshop</option>
+                            <option value="hackathon">Hackathon</option>
+                            <option value="competition">Competition</option>
+                            <option value="cultural">Cultural Activity</option>
+                            <option value="sports">Sports</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="activity_date">Activity Date</label>
+                        <input
+                            id="activity_date"
+                            name="activity_date"
+                            type="date"
+                            required
+                        >
+                        <span class="field-hint">
+                            Select the date on which the activity took place.
+                        </span>
+                    </div>
+
+                    <button class="submit-btn" type="submit">
+                        Submit Activity →
+                    </button>
+                </form>
+            </section>
+
+            <aside class="card side-card">
+                <div class="side-banner" aria-hidden="true">🏆</div>
+
+                <h2>Celebrate Your Achievements</h2>
+                <p>
+                    Your participation matters. Share your college activities
+                    and build a record of your learning experiences.
+                </p>
+
+                <ul class="tips">
+                    <li>
+                        <span class="tip-icon">📌</span>
+                        <span>Use a clear title that describes your activity.</span>
+                    </li>
+                    <li>
+                        <span class="tip-icon">✍️</span>
+                        <span>Write a description explaining your role and experience.</span>
+                    </li>
+                    <li>
+                        <span class="tip-icon">📅</span>
+                        <span>Choose the correct activity date and category.</span>
+                    </li>
+                    <li>
+                        <span class="tip-icon">🌟</span>
+                        <span>Highlight the skills you gained or the achievement you earned.</span>
+                    </li>
+                </ul>
+
+                <div class="privacy-note">
+                    🔒 Please submit accurate information and avoid including
+                    sensitive personal details.
+                </div>
+            </aside>
+
+        </div>
     </main>
+
+    <footer>
+        Smart College Connect | Connecting Students, Faculty and Campus Life.
+        © 2026
+    </footer>
+
+    {% include 'core/floating_buttons.html' %}
+
+    <script>
+        const activityDate = document.getElementById("activity_date");
+
+        // Prevent selecting future dates in the browser.
+        // Remove this restriction if students may submit upcoming activities.
+        const today = new Date();
+        const localToday = [
+            today.getFullYear(),
+            String(today.getMonth() + 1).padStart(2, "0"),
+            String(today.getDate()).padStart(2, "0")
+        ].join("-");
+
+        activityDate.max = localToday;
+    </script>
+
 </body>
 </html>

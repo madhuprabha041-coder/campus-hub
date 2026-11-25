@@ -4,175 +4,538 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Dashboard | Campus Hub</title>
+    <title>Student Dashboard | Smart College Connect</title>
 
     <style>
+        :root {
+            --primary: #174ea6;
+            --primary-dark: #123777;
+            --text: #172b4d;
+            --muted: #64748b;
+            --background: #f5f7fb;
+            --white: #ffffff;
+            --border: #e5eaf2;
+            --success: #16805d;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            background: #0b1026;
-            color: white;
-            min-height: 100vh;
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
         }
 
-        nav {
-            padding: 20px 8%;
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .navbar {
+            min-height: 76px;
+            padding: 16px 6%;
             display: flex;
+            align-items: center;
             justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text);
+            font-size: 19px;
+            font-weight: 750;
+            letter-spacing: -0.4px;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            background: #eaf1ff;
+            color: var(--primary);
+            border-radius: 12px;
+            font-size: 22px;
+        }
+
+        .brand small {
+            display: block;
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
-            background: #111832;
-            border-bottom: 1px solid #ffffff20;
+            gap: 20px;
         }
 
-        .logo {
-            font-size: 26px;
-            font-weight: 800;
-            background: linear-gradient(90deg, #ff65d8, #8b83ff, #55eaff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .nav-links a {
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+            transition: color 0.2s;
         }
 
-        nav a {
-            color: #70eaff;
-            text-decoration: none;
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links .profile-link {
+            padding: 10px 15px;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            color: var(--primary);
+        }
+
+        .logout-form {
+            display: inline;
+        }
+
+        .logout-btn {
+            border: none;
+            background: transparent;
+            color: #64748b;
+            font: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            color: #c03939;
         }
 
         .container {
-            max-width: 1100px;
-            margin: auto;
-            padding: 45px 20px;
+            width: min(1180px, 92%);
+            margin: 0 auto;
+            padding: 32px 0 48px;
         }
 
-        .welcome {
-            padding: 35px;
+        /* Welcome banner with one prominent campus photo */
+        .hero {
+            min-height: 320px;
+            padding: 44px;
+            display: flex;
+            align-items: center;
             border-radius: 20px;
-            background:
-                radial-gradient(circle at top right, #00d9ff22, transparent 40%),
-                linear-gradient(135deg, #252052, #171d3b);
-            border: 1px solid #9d8bff55;
-            margin-bottom: 35px;
+            overflow: hidden;
+            color: white;
+            background-image:
+                linear-gradient(
+                    90deg,
+                    rgba(12, 32, 68, 0.96) 0%,
+                    rgba(12, 32, 68, 0.82) 48%,
+                    rgba(12, 32, 68, 0.25) 100%
+                ),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1800&q=85");
+            background-position: center;
+            background-size: cover;
+            box-shadow: 0 12px 32px rgba(20, 48, 91, 0.12);
         }
 
-        .welcome h1 {
-            font-size: clamp(28px, 4vw, 40px);
-            margin-bottom: 12px;
+        .hero-content {
+            max-width: 620px;
         }
 
-        .welcome h1 span {
-            background: linear-gradient(90deg, #ff71d5, #54eaff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 16px;
+            padding: 6px 11px;
+            border: 1px solid rgba(255, 255, 255, 0.32);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.10);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
-        .welcome p {
-            color: #c0cbea;
-            line-height: 1.8;
+        .hero h1 {
+            margin-bottom: 14px;
+            font-size: clamp(30px, 4vw, 44px);
+            line-height: 1.2;
+            letter-spacing: -1px;
         }
 
-        .section {
-            margin-top: 35px;
-        }
-
-        h2 {
-            margin-bottom: 22px;
-        }
-
-        .announcement,
-        .material-card {
-            padding: 25px;
-            margin-bottom: 18px;
-            border-radius: 14px;
-            background: #171e3a;
-            border: 1px solid #52608a66;
+        .hero h1 span {
+            color: #b9d4ff;
             overflow-wrap: anywhere;
         }
 
-        .announcement h3,
-        .material-card h3 {
-            color: #75eaff;
-            margin-bottom: 12px;
+        .hero p {
+            max-width: 560px;
+            color: #e2eaf8;
+            font-size: 15px;
+            line-height: 1.9;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 11px 17px;
+            border-radius: 9px;
+            font-size: 14px;
+            font-weight: 700;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-2px);
+        }
+
+        .button-light {
+            background: white;
+            color: var(--primary-dark);
+        }
+
+        .button-outline {
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .section {
+            margin-top: 38px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 19px;
+            flex-wrap: wrap;
+        }
+
+        .section-heading h2 {
+            color: var(--text);
+            font-size: 22px;
+            letter-spacing: -0.4px;
+        }
+
+        .section-heading p {
+            margin-top: 4px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .section-link {
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .quick-card {
+            min-height: 155px;
+            padding: 21px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(24, 48, 84, 0.025);
+            transition: border-color 0.2s, transform 0.2s,
+                        box-shadow 0.2s;
+        }
+
+        .quick-card:hover {
+            border-color: #b8cdf3;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(24, 48, 84, 0.07);
+        }
+
+        .quick-icon {
+            width: 43px;
+            height: 43px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 14px;
+            border-radius: 12px;
+            background: #edf3ff;
+            color: var(--primary);
             font-size: 21px;
         }
 
-        .announcement p,
-        .material-card p {
-            color: #d2daf0;
+        .quick-card h3 {
+            margin-bottom: 4px;
+            color: var(--text);
+            font-size: 15px;
+        }
+
+        .quick-card p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            align-items: start;
+        }
+
+        .panel {
+            min-width: 0;
+            padding: 24px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            box-shadow: 0 3px 12px rgba(24, 48, 84, 0.025);
+        }
+
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .panel-header h2 {
+            font-size: 18px;
+            letter-spacing: -0.3px;
+        }
+
+        .count-badge {
+            display: inline-block;
+            padding: 4px 9px;
+            border-radius: 20px;
+            background: #eaf1ff;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 750;
+            white-space: nowrap;
+        }
+
+        .unread-notification {
+            border-left: 3px solid var(--primary) !important;
+            background: #f8faff !important;
+        }
+
+        .notification-item,
+        .announcement-item,
+        .material-item,
+        .event-item {
+            padding: 16px 0;
+            border-top: 1px solid #edf0f5;
+            overflow-wrap: anywhere;
+        }
+
+        .notification-item:first-child,
+        .announcement-item:first-child,
+        .material-item:first-child,
+        .event-item:first-child {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .item-title {
+            margin-bottom: 6px;
+            color: #203657;
+            font-size: 15px;
+            font-weight: 700;
+        }
+
+        .item-description {
+            color: #596980;
+            font-size: 13px;
             line-height: 1.8;
             white-space: pre-wrap;
+            overflow-wrap: anywhere;
         }
 
-        .date {
-            color: #aeb9df;
-            font-size: 13px;
-            margin-top: 15px;
-            line-height: 1.7;
+        .item-meta {
+            margin-top: 9px;
+            color: #8290a4;
+            font-size: 11px;
+            line-height: 1.8;
         }
 
-        .empty {
-            padding: 25px;
-            border-radius: 12px;
-            background: #171e3a;
-            color: #bdc8e5;
-            line-height: 1.7;
+        .item-meta strong {
+            color: #61728a;
         }
 
         .download-button {
-            display: inline-block;
-            margin-top: 18px;
-            padding: 12px 18px;
-            border-radius: 9px;
-            background: linear-gradient(100deg, #087eaf, #10b9a5);
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            margin-top: 12px;
+            padding: 9px 13px;
+            border: 1px solid #cbdaf7;
+            border-radius: 8px;
+            color: var(--primary);
+            background: #f5f8ff;
+            font-size: 12px;
+            font-weight: 700;
+            transition: background 0.2s;
         }
 
         .download-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 18px #10b9a555;
+            background: #eaf1ff;
         }
 
-        .back {
+        .empty {
+            padding: 23px 16px;
+            border: 1px dashed #d7dfeb;
+            border-radius: 10px;
+            background: #fafbfe;
+            text-align: center;
+        }
+
+        .empty h3 {
+            margin-bottom: 5px;
+            color: #334965;
+            font-size: 14px;
+        }
+
+        .empty p {
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        .read-status {
             display: inline-block;
-            margin-top: 25px;
-            color: #70eaff;
-            text-decoration: none;
+            margin-top: 7px;
+            color: var(--success);
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .event-date {
+            display: inline-block;
+            margin-bottom: 8px;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: #edf3ff;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 700;
         }
 
         footer {
+            padding: 24px 5%;
+            border-top: 1px solid var(--border);
+            background: white;
+            color: var(--muted);
             text-align: center;
-            padding: 22px;
-            background: #080c1d;
-            color: #aeb9df;
-            margin-top: 30px;
+            font-size: 12px;
+        }
+
+        @media (max-width: 900px) {
+            .quick-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                min-height: 300px;
+                padding: 32px;
+            }
         }
 
         @media (max-width: 600px) {
-            nav {
-                padding: 18px 5%;
+            .navbar {
+                padding: 15px 4%;
+            }
+
+            .brand {
+                font-size: 16px;
+            }
+
+            .nav-links {
+                gap: 13px;
+            }
+
+            .nav-links a,
+            .logout-btn {
+                font-size: 12px;
             }
 
             .container {
-                padding: 25px 15px;
+                width: 92%;
+                padding-top: 22px;
             }
 
-            .welcome {
+            .hero {
+                min-height: 340px;
                 padding: 24px;
+                background-position: 60% center;
             }
 
-            .announcement,
-            .material-card {
-                padding: 20px;
+            .hero p {
+                font-size: 13px;
+            }
+
+            .quick-grid {
+                gap: 11px;
+            }
+
+            .quick-card {
+                min-height: 145px;
+                padding: 15px;
+            }
+
+            .panel {
+                padding: 18px;
+            }
+
+            .section {
+                margin-top: 29px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            *, *::before, *::after {
+                transition: none !important;
             }
         }
     </style>
@@ -180,152 +543,300 @@
 
 <body>
 
-    <nav>
-        
-<div>
-    <a href="{% url 'home' %}">Home</a>
-    &nbsp; | &nbsp;
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a class="brand" href="{% url 'home' %}">
+            <span class="brand-icon">S</span>
+            <span>
+                Smart College Connect
+                <small>Student Portal</small>
+            </span>
+        </a>
 
-    <form method="POST"
-          action="{% url 'logout' %}"
-          style="display: inline;">
-        {% csrf_token %}
-        <button type="submit"
-                style="background: none;
-                       border: none;
-                       color: #70eaff;
-                       cursor: pointer;
-                       font-size: inherit;
-                       font-family: inherit;">
-            Logout
-        </button>
-    </form>
-</div>
+        <div class="nav-links">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="#announcements">Announcements</a>
+            <a href="#materials">Study Materials</a>
+            <a href="{% url 'inbox' %}">Inbox{% if total_unread %} ({{ total_unread }}){% endif %}</a>
+            <a href="{% url 'profile' %}" class="profile-link">
+                My Profile
+            </a>
 
+            <form method="POST"
+                  action="{% url 'logout' %}"
+                  class="logout-form">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
     </nav>
 
     <main class="container">
 
-        <section class="welcome">
-            <h1>Hello, <span>{{ request.user.username }}</span>! 🎓</h1>
+        <!-- Welcome Banner -->
+        <section class="hero">
+            <div class="hero-content">
+                <span class="eyebrow">Your campus, connected</span>
 
-            <p>
-                Welcome to your Student Dashboard. Check college announcements,
-                access study materials, and stay updated with campus activities.
-            </p>
-        </section>
+                <h1>
+                    Welcome back,<br>
+                    <span>{{ request.user.get_full_name|default:request.user.username }}</span>
+                </h1>
 
-        <!-- College Announcements -->
-        <section class="section">
-            <h2>📢 College Announcements</h2>
+                <p>
+                    Stay connected with your college community.
+                    Find important announcements, access learning resources,
+                    explore campus events, and communicate with your faculty
+                    from one convenient place.
+                </p>
 
-            {% for announcement in announcements %}
-                <article class="announcement">
-                    <h3>{{ announcement.title }}</h3>
+                <div class="hero-actions">
+                    <a href="{% url 'inbox' %}" class="button button-light">
+                        Open Messages &rarr;
+                    </a>
 
-                    <p>{{ announcement.message }}</p>
-
-                    <div class="date">
-                        Posted by {{ announcement.created_by.username }}
-                        &nbsp; | &nbsp;
-                        {{ announcement.created_at|date:"d M Y, h:i A" }}
-                    </div>
-                </article>
-            {% empty %}
-                <div class="empty">
-                    <h3>No announcements yet!</h3>
-                    <p>
-                        When your faculty publishes college announcements,
-                        they will appear here.
-                    </p>
+                    <a href="{% url 'profile' %}" class="button button-outline">
+                        View My Profile
+                    </a>
                 </div>
-            {% endfor %}
+            </div>
         </section>
 
-        <!-- Study Materials -->
+        <!-- Quick Access -->
         <section class="section">
-            <h2>📚 Study Materials</h2>
-
-            {% for material in study_materials %}
-                <article class="material-card">
-                    <h3>{{ material.title }}</h3>
-
-                    <p>
-                        {{ material.description|default:"Study material uploaded by faculty." }}
-                    </p>
-
-                    <div class="date">
-                        Uploaded by {{ material.uploaded_by.username }}
-                        &nbsp; | &nbsp;
-                        {{ material.uploaded_at|date:"d M Y, h:i A" }}
-                    </div>
-
-                    {% if material.file %}
-                        <a
-                            href="{{ material.file.url }}"
-                            class="download-button"
-                            download
-                        >
-                            ⬇ Download Material
-                        </a>
-                    {% endif %}
-                </article>
-            {% empty %}
-                <div class="empty">
-                    <h3>No study materials yet!</h3>
-                    <p>
-                        When faculty uploads notes or PDFs, they will appear
-                        here for you to access.
-                    </p>
+            <div class="section-heading">
+                <div>
+                    <h2>Your Workspace</h2>
+                    <p>Quick access to your college resources.</p>
                 </div>
-            {% endfor %}
+            </div>
+
+            <div class="quick-grid">
+                <a href="#announcements" class="quick-card">
+                    <span class="quick-icon">&#128226;</span>
+                    <h3>Announcements</h3>
+                    <p>Stay informed about college updates.</p>
+                </a>
+
+                <a href="#materials" class="quick-card">
+                    <span class="quick-icon">&#128218;</span>
+                    <h3>Study Materials</h3>
+                    <p>Access notes and learning resources.</p>
+                </a>
+
+                <a href="#events" class="quick-card">
+                    <span class="quick-icon">&#128197;</span>
+                    <h3>Campus Events</h3>
+                    <p>Discover upcoming college activities.</p>
+                </a>
+
+                <a href="{% url 'inbox' %}" class="quick-card">
+                    <span class="quick-icon">&#128172;</span>
+                    <h3>Messages</h3>
+                    <p>
+                        Communicate with faculty.
+                        {% if total_unread %}
+                            {{ total_unread }} unread message{{ total_unread|pluralize }}.
+                        {% else %}
+                            Open your Inbox.
+                        {% endif %}
+                    </p>
+                </a>
+            </div>
         </section>
 
-<!-- College Events Section -->
-<section class="events-section" style="margin-top: 40px;">
-    <h2>🎉 Upcoming College Events</h2>
+        <!-- Notifications -->
+        <section class="section" id="notifications">
+            <div class="section-heading">
+                <div>
+                    <h2>Notifications</h2>
+                    <p>Updates and announcements sent to you.</p>
+                </div>
 
-    {% for event in events %}
-        <article class="material-card">
-            <h3>🎊 {{ event.title }}</h3>
-
-            <p>{{ event.description }}</p>
-
-            <div class="date">
-                📅 {{ event.event_date|date:"d M Y" }}
-                &nbsp; | &nbsp;
-                🕒 {{ event.event_date|date:"h:i A" }}
+                {% if unread_count > 0 %}
+                    <span class="count-badge">
+                        {{ unread_count }} unread
+                    </span>
+                {% endif %}
             </div>
 
-            <div class="date">
-                📍 Venue: {{ event.venue }}
-            </div>
+            <div class="panel">
+                {% for notification in notifications %}
+                    <article class="notification-item
+                        {% if not notification.is_read %}unread-notification{% endif %}">
 
-            <div class="date">
-                Published by: {{ event.created_by.username }}
+                        <h3 class="item-title">
+                            {% if not notification.is_read %}●{% else %}✓{% endif %}
+                            {{ notification.message }}
+                        </h3>
+
+                        <p class="item-description">
+                            Announcement: {{ notification.announcement.title }}
+                        </p>
+
+                        <div class="item-meta">
+                            Received on
+                            {{ notification.created_at|date:"d M Y, h:i A" }}
+                        </div>
+
+                        <span class="read-status">
+                            {% if not notification.is_read %}
+                                Unread
+                            {% else %}
+                                Read
+                            {% endif %}
+                        </span>
+                    </article>
+                {% empty %}
+                    <div class="empty">
+                        <h3>You're all caught up.</h3>
+                        <p>
+                            New college notifications will appear here
+                            when faculty shares updates.
+                        </p>
+                    </div>
+                {% endfor %}
             </div>
-        </article>
-    {% empty %}
-        <div class="empty">
-            <h3>No college events yet!</h3>
-            <p>
-                When faculty publishes an event, its details will
-                appear here automatically.
-            </p>
+        </section>
+
+        <!-- Announcements and Materials -->
+        <div class="section content-grid">
+
+            <!-- Announcements -->
+            <section class="panel" id="announcements">
+                <div class="panel-header">
+                    <h2>College Announcements</h2>
+                    <span class="quick-icon">&#128226;</span>
+                </div>
+
+                {% for announcement in announcements %}
+                    <article class="announcement-item">
+                        <h3 class="item-title">
+                            {{ announcement.title }}
+                        </h3>
+
+                        <p class="item-description">{{ announcement.message }}</p>
+
+                        <div class="item-meta">
+                            Posted by
+                            <strong>
+                                {{ announcement.created_by.get_full_name|default:announcement.created_by.username }}
+                            </strong>
+                            <br>
+                            {{ announcement.created_at|date:"d M Y, h:i A" }}
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="empty">
+                        <h3>No announcements yet</h3>
+                        <p>
+                            Important updates from your faculty
+                            will appear here.
+                        </p>
+                    </div>
+                {% endfor %}
+            </section>
+
+            <!-- Study Materials -->
+            <section class="panel" id="materials">
+                <div class="panel-header">
+                    <h2>Study Materials</h2>
+                    <span class="quick-icon">&#128218;</span>
+                </div>
+
+                {% for material in study_materials %}
+                    <article class="material-item">
+                        <h3 class="item-title">{{ material.title }}</h3>
+
+                        <p class="item-description">
+                            {{ material.description|default:"Study material uploaded by faculty." }}
+                        </p>
+
+                        <div class="item-meta">
+                            Uploaded by
+                            <strong>
+                                {{ material.uploaded_by.get_full_name|default:material.uploaded_by.username }}
+                            </strong>
+                            <br>
+                            {{ material.uploaded_at|date:"d M Y, h:i A" }}
+                        </div>
+
+                        {% if material.file %}
+                            <a href="{{ material.file.url }}"
+                               class="download-button"
+                               download>
+                                Download Material &darr;
+                            </a>
+                        {% endif %}
+                    </article>
+                {% empty %}
+                    <div class="empty">
+                        <h3>No study materials yet</h3>
+                        <p>
+                            Notes and learning resources uploaded by
+                            faculty will appear here.
+                        </p>
+                    </div>
+                {% endfor %}
+            </section>
         </div>
-    {% endfor %}
-</section>
 
-        <a href="{% url 'home' %}" class="back">
-            ← Back to Home
-        </a>
+        <!-- College Events -->
+        <section class="section" id="events">
+            <div class="section-heading">
+                <div>
+                    <h2>Upcoming College Events</h2>
+                    <p>Keep track of activities happening on campus.</p>
+                </div>
+            </div>
+
+            <div class="panel">
+                {% for event in events %}
+                    <article class="event-item">
+                        <span class="event-date">
+                            {{ event.event_date|date:"d M Y" }}
+                        </span>
+
+                        <h3 class="item-title">{{ event.title }}</h3>
+
+                        <p class="item-description">{{ event.description }}</p>
+
+                        <div class="item-meta">
+                            <strong>Time:</strong>
+                            {{ event.event_date|date:"h:i A" }}
+                            <br>
+                            <strong>Venue:</strong>
+                            {{ event.venue }}
+                            <br>
+                            <strong>Published by:</strong>
+                            {{ event.created_by.get_full_name|default:event.created_by.username }}
+                        </div>
+                    </article>
+                {% empty %}
+                    <div class="empty">
+                        <h3>No events announced yet</h3>
+                        <p>
+                            New college events will appear here when
+                            faculty publishes them.
+                        </p>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <div style="text-align:center; margin-top:28px;">
+            <a href="{% url 'home' %}" class="section-link">
+                Back to Home &larr;
+            </a>
+        </div>
 
     </main>
 
     <footer>
-        © 2026 Campus Hub | Student Portal ✨
+        &copy; 2026 Smart College Connect. Student Portal.
     </footer>
+
+    {% include 'core/floating_buttons.html' %}
 
 </body>
 </html>
-

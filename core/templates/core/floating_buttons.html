@@ -1,0 +1,158 @@
+
+<style>
+    .floating-tools {
+        position: fixed;
+        right: 24px;
+        bottom: 24px;
+        z-index: 9999;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 12px;
+        font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    .floating-tool {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        padding: 13px 19px;
+        border-radius: 14px;
+        text-decoration: none;
+        color: #ffffff;
+        font-size: 14px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        box-shadow: 0 6px 20px rgba(15, 23, 42, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        transition: transform 0.25s ease,
+                    box-shadow 0.25s ease,
+                    background 0.25s ease;
+    }
+
+    .floating-tool:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+    }
+
+    .floating-tool:focus-visible {
+        outline: 3px solid #93c5fd;
+        outline-offset: 4px;
+    }
+
+    .tool-icon {
+        display: grid;
+        place-items: center;
+        width: 32px;
+        height: 32px;
+        flex-shrink: 0;
+        border-radius: 10px;
+        font-size: 18px;
+        background: rgba(255, 255, 255, 0.13);
+    }
+
+    .tool-text {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+    }
+
+    .tool-title {
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .tool-subtitle {
+        font-size: 11px;
+        font-weight: 400;
+        color: #dbeafe;
+    }
+
+    .chatgpt-tool {
+        background: #172033;
+    }
+
+    .chatgpt-tool:hover {
+        background: #273449;
+    }
+
+    .assistant-tool {
+        background: linear-gradient(135deg, #153e75, #2563eb);
+    }
+
+    .assistant-tool:hover {
+        background: linear-gradient(135deg, #123361, #1d4ed8);
+    }
+
+    @media (max-width: 600px) {
+        .floating-tools {
+            right: 12px;
+            bottom: 14px;
+            gap: 9px;
+        }
+
+        .floating-tool {
+            padding: 9px 12px;
+            gap: 8px;
+            border-radius: 12px;
+        }
+
+        .tool-icon {
+            width: 29px;
+            height: 29px;
+            font-size: 16px;
+        }
+
+        .tool-title {
+            font-size: 12px;
+        }
+
+        .tool-subtitle {
+            font-size: 10px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .floating-tool {
+            transition: none;
+        }
+
+        .floating-tool:hover {
+            transform: none;
+        }
+    }
+</style>
+
+<div class="floating-tools">
+
+    <a
+        href="https://chatgpt.com/"
+        class="floating-tool chatgpt-tool"
+        target="_blank"
+        rel="noopener noreferrer"
+        title="Open ChatGPT in a new tab"
+        aria-label="Open ChatGPT in a new tab">
+
+        <span class="tool-icon" aria-hidden="true">✦</span>
+
+        <span class="tool-text">
+            <span class="tool-title">ChatGPT</span>
+            <span class="tool-subtitle">AI-powered assistance</span>
+        </span>
+    </a>
+
+    <a
+        href="{% url 'ai_assistant' %}"
+        class="floating-tool assistant-tool"
+        title="Open Smart College AI Assistant"
+        aria-label="Open Smart College AI Assistant">
+
+        <span class="tool-icon" aria-hidden="true">💬</span>
+
+        <span class="tool-text">
+            <span class="tool-title">AI Assistant</span>
+            <span class="tool-subtitle">Your campus helper</span>
+        </span>
+    </a>
+
+</div>

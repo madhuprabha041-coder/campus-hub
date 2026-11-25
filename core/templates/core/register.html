@@ -4,91 +4,690 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register | Smart College Connect</title>
+    <meta name="description" content="Create your Smart College Connect account to connect with students and faculty.">
+    <title>Sign Up | Smart College Connect</title>
+
     <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary: #153e75;
+            --primary-dark: #0b1f3a;
+            --blue: #2563eb;
+            --background: #f3f6fb;
+            --text: #172b4d;
+            --muted: #64748b;
+            --border: #dbe3ef;
+            --white: #ffffff;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-family: "Segoe UI", Arial, sans-serif;
+            color: var(--text);
+            background: var(--background);
+        }
+
+        a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        nav {
+            min-height: 76px;
+            padding: 14px 7%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            box-shadow: 0 3px 15px rgba(15, 23, 42, 0.04);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            flex-shrink: 0;
+            color: white;
+            background: linear-gradient(135deg, var(--primary), var(--blue));
+            border-radius: 12px;
+            font-size: 21px;
+        }
+
+        .home-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 10px 14px;
+            border-radius: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .home-link:hover {
+            background: #eff6ff;
+        }
+
+        .main {
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-            margin: 0;
+            padding: 38px 18px;
         }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            width: 350px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h2 { text-align: center; color: #1e3a8a; }
-        label { display: block; margin-top: 12px; }
-        input, select, button {
+
+        .signup-layout {
             width: 100%;
-            padding: 10px;
-            margin-top: 6px;
-            box-sizing: border-box;
+            max-width: 1020px;
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            overflow: hidden;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: 0 18px 50px rgba(15, 43, 82, 0.09);
         }
-        button {
-            margin-top: 20px;
-            background: #2563eb;
+
+        .welcome-panel {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 650px;
+            padding: 38px 32px;
+            overflow: hidden;
             color: white;
+            background:
+                linear-gradient(
+                    150deg,
+                    rgba(11, 31, 58, 0.97),
+                    rgba(29, 78, 137, 0.88)
+                ),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1000&q=85")
+                center / cover no-repeat;
+        }
+
+        .welcome-panel::after {
+            content: "";
+            position: absolute;
+            width: 260px;
+            height: 260px;
+            right: -110px;
+            bottom: 70px;
+            border: 35px solid rgba(255, 255, 255, 0.07);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        .welcome-content,
+        .welcome-footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        .welcome-label {
+            display: inline-block;
+            padding: 8px 12px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.23);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.09);
+            color: #dbeafe;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .welcome-panel h1 {
+            margin-bottom: 17px;
+            font-size: clamp(29px, 3vw, 39px);
+            line-height: 1.25;
+        }
+
+        .welcome-panel p {
+            color: #dbeafe;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .benefits {
+            list-style: none;
+            display: grid;
+            gap: 18px;
+            margin-top: 34px;
+        }
+
+        .benefits li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            color: #f1f5f9;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .benefit-icon {
+            display: grid;
+            place-items: center;
+            width: 31px;
+            height: 31px;
+            flex-shrink: 0;
+            border-radius: 9px;
+            background: rgba(255, 255, 255, 0.13);
+        }
+
+        .welcome-footer {
+            margin-top: 35px;
+            color: #bfdbfe;
+            font-size: 12px;
+        }
+
+        .form-panel {
+            padding: 38px 38px 32px;
+            min-width: 0;
+        }
+
+        .form-heading {
+            margin-bottom: 25px;
+        }
+
+        .form-heading .eyebrow {
+            margin-bottom: 9px;
+            color: var(--blue);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .form-heading h2 {
+            margin-bottom: 9px;
+            color: var(--primary-dark);
+            font-size: 29px;
+        }
+
+        .form-heading p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .messages {
+            padding: 13px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            color: #991b1b;
+            background: #fef2f2;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .messages p + p {
+            margin-top: 5px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .field {
+            min-width: 0;
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #334155;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        input,
+        select {
+            width: 100%;
+            min-height: 46px;
+            padding: 12px 13px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            outline: none;
+            color: var(--text);
+            background: white;
+            font-family: inherit;
+            font-size: 13px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input::placeholder {
+            color: #94a3b8;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .password-wrap {
+            position: relative;
+        }
+
+        .password-wrap input {
+            padding-right: 65px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+            width: auto;
+            padding: 5px;
+            margin: 0;
             border: none;
-            border-radius: 6px;
+            color: var(--blue);
+            background: transparent;
+            font-size: 11px;
+            font-weight: 700;
             cursor: pointer;
         }
-        .messages { color: #b91c1c; }
-        .link { text-align: center; margin-top: 16px; }
+
+        .toggle-password:hover {
+            color: var(--primary-dark);
+        }
+
+        .submit-btn {
+            width: 100%;
+            min-height: 49px;
+            padding: 13px 16px;
+            margin-top: 5px;
+            border: none;
+            border-radius: 9px;
+            color: white;
+            background: linear-gradient(100deg, var(--primary), var(--blue));
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 18px rgba(37, 99, 235, 0.2);
+        }
+
+        .submit-btn:focus-visible,
+        .toggle-password:focus-visible,
+        a:focus-visible {
+            outline: 3px solid #93c5fd;
+            outline-offset: 3px;
+        }
+
+        .form-divider {
+            height: 1px;
+            margin: 24px 0 20px;
+            background: #e9eef5;
+        }
+
+        .login-link {
+            color: var(--muted);
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .login-link a,
+        .back-link {
+            color: var(--blue);
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        .login-link a:hover,
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .back-home {
+            margin-top: 12px;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        footer {
+            padding: 18px 15px;
+            color: #cbd5e1;
+            background: var(--primary-dark);
+            text-align: center;
+            font-size: 12px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 800px) {
+            .signup-layout {
+                max-width: 540px;
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-panel {
+                min-height: auto;
+                padding: 28px;
+            }
+
+            .welcome-panel h1 {
+                font-size: 30px;
+            }
+
+            .benefits {
+                gap: 12px;
+                margin-top: 22px;
+            }
+
+            .welcome-footer {
+                margin-top: 24px;
+            }
+
+            .form-panel {
+                padding: 30px 28px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            nav {
+                padding: 12px 5%;
+            }
+
+            .brand {
+                gap: 8px;
+                font-size: 15px;
+            }
+
+            .brand-icon {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+            }
+
+            .home-link {
+                padding: 8px;
+                font-size: 12px;
+            }
+
+            .main {
+                padding: 22px 12px;
+            }
+
+            .welcome-panel {
+                padding: 24px 21px;
+            }
+
+            .form-panel {
+                padding: 26px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-heading h2 {
+                font-size: 25px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                transition: none !important;
+            }
+        }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h2>Create Account</h2>
-        <p>Join Smart College Connect</p>
 
-        {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <p>{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
+    <nav>
+        <a class="brand" href="/">
+            <span class="brand-icon">✦</span>
+            <span>Smart College Connect</span>
+        </a>
 
-        <form method="POST">
-            {% csrf_token %}
+        <a class="home-link" href="/">← Home</a>
+    </nav>
 
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username"
-                   required autocomplete="username">
+    <main class="main">
+        <div class="signup-layout">
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email"
-                   required autocomplete="email">
+            <aside class="welcome-panel">
+                <div class="welcome-content">
+                    <span class="welcome-label">Your Campus Community</span>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password"
-                   required autocomplete="new-password">
+                    <h1>Connect.<br>Collaborate.<br>Grow Together.</h1>
 
-            <label for="confirm_password">Confirm Password</label>
-            <input type="password" id="confirm_password"
-                   name="confirm_password" required
-                   autocomplete="new-password">
+                    <p>
+                        One platform to bring students and faculty
+                        closer and make college life more connected.
+                    </p>
 
-            <label for="role">Register as</label>
-            <select id="role" name="role" required>
-                <option value="">Select your role</option>
-                <option value="student">Student</option>
-                <option value="faculty">Faculty</option>
-            </select>
+                    <ul class="benefits">
+                        <li>
+                            <span class="benefit-icon">📢</span>
+                            <span>Stay updated with college announcements and events.</span>
+                        </li>
+                        <li>
+                            <span class="benefit-icon">📚</span>
+                            <span>Access study materials and learning resources.</span>
+                        </li>
+                        <li>
+                            <span class="benefit-icon">💬</span>
+                            <span>Communicate directly with your college community.</span>
+                        </li>
+                    </ul>
+                </div>
 
-            <button type="submit">Create Account</button>
-        </form>
+                <div class="welcome-footer">
+                    Your College, One Platform.
+                </div>
+            </aside>
 
-        <div class="link">
-            Already have an account?
-            <a href="{% url 'login' %}">Login</a>
+            <section class="form-panel">
+                <div class="form-heading">
+                    <p class="eyebrow">Get Started Today</p>
+                    <h2>Create Account</h2>
+                    <p>
+                        Enter your details below to join Smart College Connect.
+                    </p>
+                </div>
+
+                {% if messages %}
+                    <div class="messages" role="alert" aria-live="polite">
+                        {% for message in messages %}
+                            <p>{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="form-row">
+                        <div class="field">
+                            <label for="username">Username</label>
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                placeholder="Choose a username"
+                                required
+                                autocomplete="username"
+                            >
+                        </div>
+
+                        <div class="field">
+                            <label for="email">Email Address</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="you@example.com"
+                                required
+                                autocomplete="email"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+                        <div class="password-wrap">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Create a password"
+                                required
+                                autocomplete="new-password"
+                            >
+                            <button
+                                class="toggle-password"
+                                type="button"
+                                data-target="password"
+                                aria-controls="password"
+                                aria-label="Show password"
+                                aria-pressed="false"
+                            >Show</button>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="confirm_password">Confirm Password</label>
+                        <div class="password-wrap">
+                            <input
+                                type="password"
+                                id="confirm_password"
+                                name="confirm_password"
+                                placeholder="Enter password again"
+                                required
+                                autocomplete="new-password"
+                            >
+                            <button
+                                class="toggle-password"
+                                type="button"
+                                data-target="confirm_password"
+                                aria-controls="confirm_password"
+                                aria-label="Show confirm password"
+                                aria-pressed="false"
+                            >Show</button>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label for="role">Register As</label>
+                        <select id="role" name="role" required>
+                            <option value="">Select your role</option>
+                            <option value="student">Student</option>
+                            <option value="faculty">Faculty</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="college">Select Your College</label>
+                        <select name="college" id="college" required>
+                            <option value="">-- Select Your College --</option>
+
+                            {% for college in colleges %}
+                                <option value="{{ college.id }}">
+                                    {{ college.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button class="submit-btn" type="submit">
+                        Create My Account →
+                    </button>
+                </form>
+
+                <div class="form-divider"></div>
+
+                <p class="login-link">
+                    Already have an account?
+                    <a href="{% url 'login' %}">Log In</a>
+                </p>
+
+                <p class="back-home">
+                    <a class="back-link" href="/">← Back to Home</a>
+                </p>
+            </section>
+
         </div>
-    </div>
+    </main>
+
+    <footer>
+        Smart College Connect | Connecting Students, Faculty and Campus Life.
+        © 2026
+    </footer>
+
+    {% include 'core/floating_buttons.html' %}
+
+    <script>
+        document.querySelectorAll(".toggle-password").forEach(function (button) {
+            button.addEventListener("click", function () {
+                const input = document.getElementById(button.dataset.target);
+                const showPassword = input.type === "password";
+
+                input.type = showPassword ? "text" : "password";
+                button.textContent = showPassword ? "Hide" : "Show";
+                button.setAttribute("aria-pressed", String(showPassword));
+                button.setAttribute(
+                    "aria-label",
+                    (showPassword ? "Hide " : "Show ") +
+                    (input.id === "confirm_password" ? "confirm password" : "password")
+                );
+            });
+        });
+
+        const signupForm = document.querySelector("form");
+        const password = document.getElementById("password");
+        const confirmPassword = document.getElementById("confirm_password");
+
+        signupForm.addEventListener("submit", function (event) {
+            if (password.value !== confirmPassword.value) {
+                event.preventDefault();
+                confirmPassword.setCustomValidity("Passwords do not match.");
+                confirmPassword.reportValidity();
+            } else {
+                confirmPassword.setCustomValidity("");
+            }
+        });
+
+        confirmPassword.addEventListener("input", function () {
+            confirmPassword.setCustomValidity("");
+        });
+    </script>
+
 </body>
 </html>

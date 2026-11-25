@@ -4,9 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Publish Announcement | Campus Hub</title>
+
+    <title>Publish Announcement | Smart College Connect</title>
 
     <style>
+        :root {
+            --primary: #2457d6;
+            --primary-dark: #183fa8;
+            --navy: #14213d;
+            --text: #1e293b;
+            --muted: #64748b;
+            --background: #f4f7fc;
+            --border: #e2e8f0;
+            --white: #ffffff;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -14,125 +26,504 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: "Segoe UI", Arial, sans-serif;
             min-height: 100vh;
-            padding: 30px 16px;
-            background: radial-gradient(circle at top left, #692bba55, transparent 40%), #0b1026;
-            color: white;
+            background: var(--background);
+            color: var(--text);
         }
 
-        .container {
-            max-width: 650px;
-            margin: 40px auto;
-            padding: 35px;
-            border-radius: 20px;
-            background: #171e3a;
-            border: 1px solid #9180ff55;
-            box-shadow: 0 0 35px #913dff22;
+        a {
+            text-decoration: none;
+        }
+
+        .navbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--border);
+            padding: 17px 6%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            color: var(--navy);
+            font-size: 19px;
+            font-weight: 750;
+        }
+
+        .brand-icon {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            color: white;
+            background: var(--primary);
+            font-size: 21px;
+        }
+
+        .nav-link {
+            color: var(--primary);
+            font-weight: 650;
+            font-size: 14px;
+        }
+
+        .page {
+            max-width: 1080px;
+            margin: 42px auto;
+            padding: 0 22px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 24px;
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+        .breadcrumb a {
+            color: var(--primary);
+        }
+
+        .page-heading {
+            margin-bottom: 28px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 10px;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
         }
 
         h1 {
-            margin-bottom: 12px;
-            background: linear-gradient(90deg, #ff71d5, #54eaff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            color: var(--navy);
+            font-size: clamp(27px, 4vw, 36px);
+            letter-spacing: -0.8px;
+            margin-bottom: 10px;
         }
 
-        .description {
-            color: #c0cbea;
+        .page-heading p {
+            color: var(--muted);
+            line-height: 1.7;
+            max-width: 650px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.6fr) minmax(230px, 0.8fr);
+            gap: 25px;
+            align-items: start;
+        }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: 0 8px 30px rgba(30, 50, 90, 0.05);
+            overflow: hidden;
+        }
+
+        .card-header {
+            padding: 24px 27px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-header h2 {
+            color: var(--navy);
+            font-size: 19px;
+            margin-bottom: 7px;
+        }
+
+        .card-header p {
+            color: var(--muted);
+            font-size: 13px;
             line-height: 1.6;
-            margin-bottom: 25px;
+        }
+
+        .form-body {
+            padding: 26px 27px 29px;
+        }
+
+        .messages {
+            margin-bottom: 22px;
+            padding: 13px 15px;
+            border-radius: 10px;
+            background: #ecfdf5;
+            border: 1px solid #bbf7d0;
+            color: #166534;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
         }
 
         label {
             display: block;
-            margin: 18px 0 8px;
-            font-weight: bold;
+            margin-bottom: 9px;
+            color: #334155;
+            font-size: 14px;
+            font-weight: 700;
         }
 
-        input, textarea {
+        .required {
+            color: #dc2626;
+        }
+
+        input,
+        textarea {
             width: 100%;
-            padding: 13px;
-            border: 1px solid #52608a;
-            border-radius: 9px;
-            background: #0e1530;
-            color: white;
-            font-size: 16px;
+            padding: 13px 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            background: #fff;
+            color: var(--text);
+            font: inherit;
+            font-size: 14px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(36, 87, 214, 0.12);
         }
 
         textarea {
-            min-height: 160px;
+            min-height: 175px;
             resize: vertical;
+            line-height: 1.7;
         }
 
-        button {
-            margin-top: 22px;
-            padding: 14px 22px;
-            border: none;
-            border-radius: 9px;
-            background: linear-gradient(100deg, #913dff, #e33ec9);
-            color: white;
-            font-weight: bold;
-            font-size: 16px;
+        .field-help {
+            margin-top: 8px;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+        .form-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            min-height: 45px;
+            padding: 12px 19px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 700;
             cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
         }
 
-        .messages {
-            margin-bottom: 15px;
-            color: #7cffc4;
+        .btn-primary {
+            border: none;
+            background: var(--primary);
+            color: white;
         }
 
-        .back {
-            display: inline-block;
-            margin-top: 22px;
-            color: #70eaff;
-            text-decoration: none;
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            border: 1px solid var(--border);
+            color: #475569;
+            background: white;
+        }
+
+        .btn-secondary:hover {
+            background: #f8fafc;
+        }
+
+        .info-card {
+            padding: 25px;
+        }
+
+        .info-icon {
+            display: grid;
+            place-items: center;
+            width: 48px;
+            height: 48px;
+            margin-bottom: 18px;
+            border-radius: 14px;
+            background: #eaf0ff;
+            font-size: 24px;
+        }
+
+        .info-card h2 {
+            color: var(--navy);
+            font-size: 19px;
+            margin-bottom: 12px;
+        }
+
+        .info-card > p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .tip {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            padding: 14px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .tip-icon {
+            flex-shrink: 0;
+            font-size: 17px;
+        }
+
+        .tip strong {
+            display: block;
+            margin-bottom: 5px;
+            color: #334155;
+            font-size: 13px;
+        }
+
+        .tip span {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .notice {
+            margin-top: 18px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #eff6ff;
+            color: #1e40af;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        footer {
+            padding: 25px 15px;
+            margin-top: 45px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            text-align: center;
+            font-size: 12px;
+        }
+
+        @media (max-width: 760px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page {
+                margin-top: 28px;
+            }
+
+            .navbar {
+                padding: 14px 5%;
+            }
+
+            .brand {
+                font-size: 16px;
+            }
+
+            .card-header,
+            .form-body {
+                padding: 21px;
+            }
+        }
+
+        @media (max-width: 420px) {
+            .nav-link {
+                font-size: 12px;
+            }
+
+            .form-actions .btn {
+                width: 100%;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>📢 Publish Announcement</h1>
-        <p class="description">
-            Share important college updates with your students.
-        </p>
 
-        {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <p>{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
-
-        <form method="POST">
-            {% csrf_token %}
-
-            <label for="title">Announcement Title</label>
-            <input
-                type="text"
-                id="title"
-                name="title"
-                placeholder="Example: College reopens on Monday"
-                required
-            >
-
-            <label for="message">Announcement Details</label>
-            <textarea
-                id="message"
-                name="message"
-                placeholder="Enter the announcement details..."
-                required
-            ></textarea>
-
-            <button type="submit">Publish Announcement →</button>
-        </form>
-
-        <a class="back" href="{% url 'faculty_dashboard' %}">
-            ← Back to Faculty Dashboard
+    <header class="navbar">
+        <a class="brand" href="{% url 'home' %}">
+            <span class="brand-icon">🎓</span>
+            <span>Smart College Connect</span>
         </a>
-    </div>
+
+        <a class="nav-link" href="{% url 'faculty_dashboard' %}">
+            ← Faculty Dashboard
+        </a>
+    </header>
+
+    <main class="page">
+
+        <div class="breadcrumb">
+            <a href="{% url 'home' %}">Home</a>
+            &nbsp; / &nbsp;
+            <a href="{% url 'faculty_dashboard' %}">Faculty Dashboard</a>
+            &nbsp; / &nbsp;
+            Publish Announcement
+        </div>
+
+        <section class="page-heading">
+            <span class="eyebrow">Faculty Workspace</span>
+            <h1>Publish an Announcement</h1>
+            <p>
+                Keep your students informed by sharing important college
+                updates, academic notices, deadlines, and event information.
+            </p>
+        </section>
+
+        <div class="content-grid">
+
+            <section class="card">
+                <div class="card-header">
+                    <h2>Announcement Details</h2>
+                    <p>Complete the fields below to prepare your announcement.</p>
+                </div>
+
+                <div class="form-body">
+
+                    {% if messages %}
+                        <div class="messages" role="status" aria-live="polite">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="form-group">
+                            <label for="title">
+                                Announcement Title
+                                <span class="required">*</span>
+                            </label>
+
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                placeholder="e.g. Semester Examination Schedule"
+                                maxlength="200"
+                                required
+                            >
+
+                            <p class="field-help">
+                                Use a short, clear title that explains the update.
+                            </p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="message">
+                                Announcement Details
+                                <span class="required">*</span>
+                            </label>
+
+                            <textarea
+                                id="message"
+                                name="message"
+                                placeholder="Write the announcement details, important dates, instructions, and other information..."
+                                required
+                            ></textarea>
+
+                            <p class="field-help">
+                                Include all information students need to know.
+                            </p>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">
+                                📢 Publish Announcement
+                            </button>
+
+                            <a
+                                href="{% url 'faculty_dashboard' %}"
+                                class="btn btn-secondary"
+                            >
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <aside class="card info-card">
+                <div class="info-icon">💡</div>
+
+                <h2>Publishing Guidelines</h2>
+
+                <p>
+                    Make every announcement useful, clear, and easy for
+                    students to understand.
+                </p>
+
+                <div class="tip">
+                    <span class="tip-icon">✓</span>
+                    <div>
+                        <strong>Be specific</strong>
+                        <span>Clearly explain what students need to know or do.</span>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <span class="tip-icon">📅</span>
+                    <div>
+                        <strong>Include important dates</strong>
+                        <span>Mention deadlines, schedules, and timings when relevant.</span>
+                    </div>
+                </div>
+
+                <div class="tip">
+                    <span class="tip-icon">✍️</span>
+                    <div>
+                        <strong>Keep it professional</strong>
+                        <span>Use simple language and check the details before publishing.</span>
+                    </div>
+                </div>
+
+                <div class="notice">
+                    <strong>Before you publish:</strong>
+                    Review the title and message to make sure the information
+                    is accurate and complete.
+                </div>
+            </aside>
+
+        </div>
+    </main>
+
+    <footer>
+        © 2026 Smart College Connect · Connecting faculty and students
+    </footer>
+
+    {% include 'core/floating_buttons.html' %}
+
 </body>
 </html>

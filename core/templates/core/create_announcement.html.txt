@@ -136,5 +136,7 @@
             ← Back to Faculty Dashboard
         </a>
     </div>
+    
+{% include 'core/floating_buttons.html' %}
 </body>
 </html>

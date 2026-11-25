@@ -1,0 +1,801 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Assistant | Smart College Connect</title>
+
+    <style>
+        :root {
+            --navy: #14213d;
+            --primary: #2457d6;
+            --primary-dark: #183fa8;
+            --background: #f4f7fc;
+            --white: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            color: var(--text);
+        }
+
+        button, textarea {
+            font: inherit;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+
+        .sidebar {
+            width: 255px;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+            padding: 25px 17px;
+            background: var(--navy);
+            color: white;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin: 0 0 32px 4px;
+            color: white;
+            font-size: 17px;
+            font-weight: 750;
+            line-height: 1.5;
+        }
+
+        .brand-icon {
+            display: grid;
+            place-items: center;
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: #2457d6;
+            font-size: 21px;
+        }
+
+        .new-chat {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 13px;
+            margin-bottom: 30px;
+            border: 1px solid #52658a;
+            border-radius: 11px;
+            color: white;
+            font-size: 14px;
+            font-weight: 650;
+            transition: background 0.2s;
+        }
+
+        .new-chat:hover {
+            background: #23365e;
+        }
+
+        .sidebar-label {
+            margin: 5px 8px 12px;
+            color: #aab9d8;
+            font-size: 11px;
+            font-weight: 750;
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-info {
+            padding: 0 8px;
+            color: #d0daed;
+            font-size: 13px;
+            line-height: 1.9;
+        }
+
+        .sidebar-tip {
+            margin-top: 24px;
+            padding: 15px;
+            border: 1px solid #35476b;
+            border-radius: 12px;
+            background: #1b2b4c;
+        }
+
+        .sidebar-tip strong {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 13px;
+        }
+
+        .sidebar-tip p {
+            margin: 0;
+            color: #c6d2e9;
+            font-size: 12px;
+            line-height: 1.7;
+        }
+
+        .home-link {
+            display: flex;
+            align-items: center;
+            gap: 11px;
+            margin-top: auto;
+            padding: 14px 8px 5px;
+            color: #e0e8f8;
+            font-size: 13px;
+        }
+
+        .home-link:hover {
+            color: white;
+        }
+
+        /* Main layout */
+
+        .main {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            min-width: 0;
+            min-height: 100vh;
+        }
+
+        .topbar {
+            min-height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px 30px;
+            background: white;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .topbar h2 {
+            margin: 0;
+            color: var(--navy);
+            font-size: 19px;
+        }
+
+        .topbar p {
+            margin: 5px 0 0;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid #dbeafe;
+            border-radius: 25px;
+            background: #eff6ff;
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #16a34a;
+        }
+
+        .chat-area {
+            flex: 1;
+            width: 100%;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 30px 28px;
+        }
+
+        /* Welcome screen */
+
+        .welcome {
+            margin: 65px auto 35px;
+            text-align: center;
+        }
+
+        .welcome-icon {
+            display: grid;
+            place-items: center;
+            width: 72px;
+            height: 72px;
+            margin: 0 auto 23px;
+            border: 1px solid #dbeafe;
+            border-radius: 22px;
+            background: #eaf0ff;
+            color: var(--primary);
+            font-size: 34px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+            margin-bottom: 13px;
+            color: var(--primary);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+        }
+
+        .welcome h1 {
+            margin: 0 0 13px;
+            color: var(--navy);
+            font-size: clamp(25px, 4vw, 34px);
+            letter-spacing: -0.8px;
+        }
+
+        .welcome p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .suggestion-heading {
+            max-width: 700px;
+            margin: 35px auto 13px;
+            color: #475569;
+            font-size: 12px;
+            font-weight: 750;
+        }
+
+        .suggestions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 13px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .suggestion {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+            padding: 17px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: white;
+            color: var(--text);
+            text-align: left;
+            cursor: pointer;
+            transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+        }
+
+        .suggestion:hover {
+            transform: translateY(-2px);
+            border-color: #a9bdf5;
+            box-shadow: 0 6px 18px rgba(36, 87, 214, 0.07);
+        }
+
+        .suggestion-icon {
+            display: grid;
+            place-items: center;
+            width: 37px;
+            height: 37px;
+            flex-shrink: 0;
+            border-radius: 10px;
+            background: #eff6ff;
+            font-size: 18px;
+        }
+
+        .suggestion strong {
+            display: block;
+            margin: 2px 0 6px;
+            color: var(--navy);
+            font-size: 13px;
+        }
+
+        .suggestion span {
+            display: block;
+            color: var(--muted);
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        /* Question and answer */
+
+        .conversation {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            padding: 12px 0 35px;
+        }
+
+        .message-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 13px;
+        }
+
+        .avatar {
+            display: grid;
+            place-items: center;
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            border-radius: 12px;
+            background: var(--navy);
+            color: white;
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .user-avatar {
+            background: #eaf0ff;
+            color: var(--primary);
+        }
+
+        .message-content {
+            flex: 1;
+            min-width: 0;
+            padding-top: 5px;
+            overflow-wrap: anywhere;
+        }
+
+        .message-name {
+            margin-bottom: 9px;
+            color: var(--navy);
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        .message-text {
+            color: #334155;
+            font-size: 14px;
+            line-height: 1.9;
+            white-space: pre-wrap;
+        }
+
+        .message-panel {
+            padding: 17px 19px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+        }
+
+        .error-message {
+            margin-bottom: 20px;
+            padding: 13px 15px;
+            border: 1px solid #fecaca;
+            border-radius: 10px;
+            background: #fef2f2;
+            color: #b91c1c;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* Composer */
+
+        .composer-wrap {
+            position: sticky;
+            bottom: 0;
+            padding: 15px 25px 14px;
+            background: linear-gradient(
+                to bottom,
+                rgba(244, 247, 252, 0.8),
+                var(--background) 25%
+            );
+        }
+
+        .composer {
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 13px 14px 12px;
+            border: 1px solid #d7dfed;
+            border-radius: 16px;
+            background: white;
+            box-shadow: 0 7px 25px rgba(28, 47, 91, 0.07);
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .composer:focus-within {
+            border-color: #9bb4f5;
+            box-shadow: 0 0 0 3px rgba(36, 87, 214, 0.07);
+        }
+
+        .composer textarea {
+            display: block;
+            width: 100%;
+            min-height: 55px;
+            max-height: 180px;
+            resize: vertical;
+            padding: 7px;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .composer textarea::placeholder {
+            color: #94a3b8;
+        }
+
+        .composer-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 6px 3px 0;
+        }
+
+        .composer-hint {
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        .send-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 11px 18px;
+            border: none;
+            border-radius: 10px;
+            background: var(--primary);
+            color: white;
+            font-size: 13px;
+            font-weight: 750;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .send-button:hover {
+            background: var(--primary-dark);
+        }
+
+        .send-button:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
+
+        .footer-note {
+            max-width: 820px;
+            margin: 11px auto 0;
+            color: #8b95a7;
+            font-size: 10px;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        /* Responsive */
+
+        @media (max-width: 760px) {
+            .sidebar {
+                width: 72px;
+                padding: 20px 9px;
+            }
+
+            .brand {
+                justify-content: center;
+                margin: 0 0 27px;
+                font-size: 0;
+            }
+
+            .brand-icon {
+                font-size: 20px;
+            }
+
+            .brand-text,
+            .new-chat-text,
+            .sidebar-label,
+            .sidebar-info,
+            .sidebar-tip,
+            .home-text {
+                display: none;
+            }
+
+            .new-chat {
+                justify-content: center;
+                padding: 12px 4px;
+                font-size: 23px;
+            }
+
+            .home-link {
+                justify-content: center;
+                font-size: 20px;
+            }
+
+            .topbar {
+                padding: 14px 18px;
+            }
+
+            .chat-area {
+                padding: 20px 16px;
+            }
+
+            .welcome {
+                margin-top: 40px;
+            }
+
+            .suggestions {
+                grid-template-columns: 1fr;
+            }
+
+            .composer-wrap {
+                padding: 12px 12px;
+            }
+        }
+
+        @media (max-width: 440px) {
+            .sidebar {
+                width: 55px;
+                padding: 16px 6px;
+            }
+
+            .brand-icon {
+                width: 36px;
+                height: 36px;
+            }
+
+            .topbar h2 {
+                font-size: 16px;
+            }
+
+            .status {
+                padding: 7px 9px;
+                font-size: 10px;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .suggestion {
+                padding: 14px;
+            }
+
+            .composer-hint {
+                max-width: 145px;
+                line-height: 1.5;
+            }
+
+            .send-button {
+                padding: 11px 13px;
+            }
+
+            .send-label {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="app">
+
+    <aside class="sidebar">
+        <a class="brand" href="{% url 'home' %}">
+            <span class="brand-icon">🎓</span>
+            <span class="brand-text">Smart College<br>Connect</span>
+        </a>
+
+        <a class="new-chat" href="{% url 'ai_assistant' %}">
+            <span aria-hidden="true">＋</span>
+            <span class="new-chat-text">New Chat</span>
+        </a>
+
+        <div class="sidebar-label">Your AI Assistant</div>
+
+        <div class="sidebar-info">
+            Your learning companion for programming, academic subjects,
+            college projects, and career preparation.
+        </div>
+
+        <div class="sidebar-tip">
+            <strong>💡 Helpful tip</strong>
+            <p>Ask clear questions and include examples when you need a detailed explanation.</p>
+        </div>
+
+        <a class="home-link" href="{% url 'home' %}">
+            <span aria-hidden="true">⌂</span>
+            <span class="home-text">Back to Home</span>
+        </a>
+    </aside>
+
+    <main class="main">
+
+        <header class="topbar">
+            <div>
+                <h2>AI Assistant</h2>
+                <p>Learn, explore, and solve problems</p>
+            </div>
+
+            <div class="status">
+                <span class="status-dot"></span>
+                AI Assistant
+            </div>
+        </header>
+
+        <section class="chat-area">
+
+            {% if question or answer %}
+
+                <div class="conversation">
+
+                    {% if question %}
+                        <div class="message-row">
+                            <div class="avatar user-avatar">ME</div>
+
+                            <div class="message-content">
+                                <div class="message-name">Your Question</div>
+                                <div class="message-panel">
+                                    <div class="message-text">{{ question }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if answer %}
+                        <div class="message-row">
+                            <div class="avatar">AI</div>
+
+                            <div class="message-content">
+                                <div class="message-name">AI Assistant</div>
+                                <div class="message-text">{{ answer }}</div>
+                            </div>
+                        </div>
+                    {% endif %}
+
+                </div>
+
+            {% else %}
+
+                <div class="welcome">
+                    <div class="welcome-icon">✦</div>
+
+                    <span class="eyebrow">Your Learning Companion</span>
+
+                    <h1>How can I help you today?</h1>
+
+                    <p>
+                        Ask questions, explore new concepts, and get support
+                        with your learning journey.
+                    </p>
+                </div>
+
+                <div class="suggestion-heading">
+                    Try asking about
+                </div>
+
+                <div class="suggestions">
+
+                    <button type="button" class="suggestion"
+                        data-question="Explain Python programming in simple words with an example.">
+                        <span class="suggestion-icon">💻</span>
+                        <span>
+                            <strong>Python Programming</strong>
+                            <span>Learn concepts with simple examples.</span>
+                        </span>
+                    </button>
+
+                    <button type="button" class="suggestion"
+                        data-question="Help me prepare for a technical interview. Give me beginner-friendly questions and answers.">
+                        <span class="suggestion-icon">🎯</span>
+                        <span>
+                            <strong>Interview Preparation</strong>
+                            <span>Practise technical questions and answers.</span>
+                        </span>
+                    </button>
+
+                    <button type="button" class="suggestion"
+                        data-question="Suggest some useful and unique final-year college project ideas.">
+                        <span class="suggestion-icon">🎓</span>
+                        <span>
+                            <strong>College Projects</strong>
+                            <span>Explore ideas for your final-year project.</span>
+                        </span>
+                    </button>
+
+                    <button type="button" class="suggestion"
+                        data-question="Explain SQL joins with simple tables and examples.">
+                        <span class="suggestion-icon">📊</span>
+                        <span>
+                            <strong>SQL and Databases</strong>
+                            <span>Understand queries and database concepts.</span>
+                        </span>
+                    </button>
+
+                </div>
+
+            {% endif %}
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="error-message">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+        </section>
+
+        <div class="composer-wrap">
+            <form method="POST" class="composer" id="chatForm">
+                {% csrf_token %}
+
+                <textarea
+                    id="question"
+                    name="question"
+                    placeholder="Ask anything about coding, studies, or projects..."
+                    aria-label="Enter your question"
+                    maxlength="10000"
+                    rows="2"
+                    required
+                ></textarea>
+
+                <div class="composer-bottom">
+                    <span class="composer-hint">
+                        Clear questions help you get better answers.
+                    </span>
+
+                    <button class="send-button" type="submit" id="sendButton">
+                        <span class="send-label">Send Message</span>
+                        <span aria-hidden="true">↑</span>
+                    </button>
+                </div>
+            </form>
+
+            <div class="footer-note">
+                AI-generated responses can contain mistakes. Verify important information.
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+    const questionBox = document.getElementById("question");
+    const chatForm = document.getElementById("chatForm");
+    const sendButton = document.getElementById("sendButton");
+
+    // Fill the input when a suggestion is selected.
+    document.querySelectorAll("[data-question]").forEach(function (button) {
+        button.addEventListener("click", function () {
+            questionBox.value = button.dataset.question;
+            questionBox.focus();
+            questionBox.dispatchEvent(new Event("input"));
+        });
+    });
+
+    // Grow the text area as the user types.
+    questionBox.addEventListener("input", function () {
+        this.style.height = "auto";
+        this.style.height = Math.min(this.scrollHeight, 180) + "px";
+    });
+
+    // Prevent accidental double submission.
+    chatForm.addEventListener("submit", function () {
+        if (questionBox.value.trim() === "") {
+            return;
+        }
+
+        sendButton.disabled = true;
+        sendButton.innerHTML = "Sending...";
+    });
+</script>
+
+</body>
+</html>

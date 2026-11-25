@@ -5,93 +5,518 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Smart College Connect</title>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f1f5f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
+        :root {
+            --navy: #14213d;
+            --blue: #2563eb;
+            --light-blue: #eff6ff;
+            --background: #f5f7fb;
+            --text: #1e293b;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --white: #ffffff;
         }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            width: 350px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        h2 {
-            text-align: center;
-            color: #1e3a8a;
-        }
-        label {
-            display: block;
-            margin-top: 15px;
-        }
-        input, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 6px;
+
+        * {
             box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        button {
-            margin-top: 22px;
-            background: #2563eb;
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: var(--background);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: var(--text);
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        /* Navigation */
+
+        nav {
+            background: white;
+            padding: 19px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            color: var(--navy);
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: var(--blue);
+        }
+
+        nav a.home-link {
+            color: var(--blue);
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        nav a.home-link:hover {
+            color: var(--navy);
+        }
+
+        /* Main layout */
+
+        .main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 22px;
+        }
+
+        .login-layout {
+            width: 100%;
+            max-width: 1050px;
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 18px 50px rgba(15, 23, 42, 0.08);
+        }
+
+        /* Campus image panel */
+
+        .image-panel {
+            min-height: 560px;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
             color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
+            background:
+                linear-gradient(
+                    180deg,
+                    rgba(15, 31, 59, 0.32),
+                    rgba(15, 31, 59, 0.93)
+                ),
+                url("https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=85")
+                center / cover no-repeat;
         }
-        button:hover {
-            background: #1d4ed8;
+
+        .campus-label {
+            width: fit-content;
+            padding: 9px 13px;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.13);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
         }
+
+        .image-content h1 {
+            font-size: clamp(30px, 3.5vw, 42px);
+            line-height: 1.2;
+            margin-bottom: 17px;
+        }
+
+        .image-content h1 span {
+            color: #93c5fd;
+        }
+
+        .image-content p {
+            max-width: 390px;
+            color: #e2e8f0;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .image-footer {
+            font-size: 13px;
+            color: #dbeafe;
+        }
+
+        /* Login form */
+
+        .form-panel {
+            padding: 48px 42px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .login-icon {
+            width: 54px;
+            height: 54px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-blue);
+            border-radius: 14px;
+            font-size: 26px;
+            margin-bottom: 23px;
+        }
+
+        .form-panel h2 {
+            font-size: 30px;
+            color: var(--navy);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.7;
+            margin-bottom: 26px;
+        }
+
         .messages {
-            color: #b91c1c;
-            text-align: center;
+            margin-bottom: 18px;
         }
-        .link {
+
+        .message {
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 13px;
+            line-height: 1.6;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            color: #1e40af;
+            overflow-wrap: anywhere;
+        }
+
+        .message.error {
+            background: #fef2f2;
+            border-color: #fecaca;
+            color: #991b1b;
+        }
+
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
+            display: block;
+            margin-bottom: 9px;
+            color: #334155;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .field input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #cbd5e1;
+            border-radius: 9px;
+            font-size: 14px;
+            color: var(--text);
+            background: white;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .field input:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 65px;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            color: var(--blue);
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            padding: 5px;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 14px;
+            margin-top: 4px;
+            border: none;
+            border-radius: 9px;
+            background: var(--blue);
+            color: white;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+        }
+
+        .login-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-1px);
+        }
+
+        .register-link {
             text-align: center;
-            margin-top: 18px;
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.8;
+            margin-top: 24px;
+        }
+
+        .register-link a {
+            color: var(--blue);
+            font-weight: 700;
+        }
+
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .back-link:hover {
+            color: var(--blue);
+        }
+
+        .security-note {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 18px;
+            border-top: 1px solid #f1f5f9;
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        /* Footer */
+
+        footer {
+            background: white;
+            color: var(--muted);
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid var(--border);
+            font-size: 12px;
+        }
+
+        @media (max-width: 760px) {
+            nav {
+                padding: 17px 5%;
+            }
+
+            .logo {
+                font-size: 19px;
+            }
+
+            .main {
+                padding: 25px 14px;
+            }
+
+            .login-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .image-panel {
+                min-height: 280px;
+                padding: 27px;
+            }
+
+            .image-content h1 {
+                font-size: 30px;
+            }
+
+            .image-content p {
+                font-size: 13px;
+            }
+
+            .image-footer {
+                margin-top: 25px;
+            }
+
+            .form-panel {
+                padding: 32px 25px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .logo {
+                font-size: 17px;
+            }
+
+            .form-panel {
+                padding: 28px 19px;
+            }
         }
     </style>
 </head>
+
 <body>
-    <div class="container">
-        <h2>Welcome Back!</h2>
-        <p>Login to Smart College Connect</p>
 
-        {% if messages %}
-            <div class="messages">
-                {% for message in messages %}
-                    <p>{{ message }}</p>
-                {% endfor %}
-            </div>
-        {% endif %}
+    <nav>
+        <a href="/" class="logo">
+            Smart College <span>Connect</span>
+        </a>
 
-        <form method="POST">
-            {% csrf_token %}
+        <a href="/" class="home-link">← Home</a>
+    </nav>
 
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username"
-                   required autocomplete="username">
+    <main class="main">
+        <div class="login-layout">
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password"
-                   required autocomplete="current-password">
+            <!-- Campus image section -->
+            <section class="image-panel">
+                <div class="campus-label">YOUR COLLEGE COMMUNITY</div>
 
-            <button type="submit">Login</button>
-        </form>
+                <div class="image-content">
+                    <h1>
+                        Welcome to<br>
+                        <span>Smart College Connect</span>
+                    </h1>
 
-        <div class="link">
-            Don't have an account?
-            <a href="{% url 'register' %}">Create Account</a>
+                    <p>
+                        Stay connected with your college community.
+                        Access announcements, study materials, events,
+                        and communication between students and faculty
+                        from one convenient platform.
+                    </p>
+                </div>
+
+                <div class="image-footer">
+                    Learn together. Connect better. Grow together.
+                </div>
+            </section>
+
+            <!-- Login form section -->
+            <section class="form-panel">
+
+                <div class="login-icon">🔐</div>
+
+                <h2>Welcome Back!</h2>
+
+                <p class="subtitle">
+                    Sign in to your account to access your college portal.
+                </p>
+
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <div class="message
+                                {% if message.tags == 'error' %}error{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="field">
+                        <label for="username">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            name="username"
+                            placeholder="Enter your username"
+                            autocomplete="username"
+                            required
+                            autofocus
+                        >
+                    </div>
+
+                    <div class="field">
+                        <label for="password">Password</label>
+
+                        <div class="password-wrapper">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                placeholder="Enter your password"
+                                autocomplete="current-password"
+                                required
+                            >
+
+                            <button
+                                type="button"
+                                class="show-password"
+                                id="togglePassword"
+                                aria-label="Show password"
+                                aria-pressed="false">
+                                Show
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="login-button">
+                        Log In →
+                    </button>
+                </form>
+
+                <div class="register-link">
+                    Don't have an account?
+                    <a href="/signup/">Create Account</a>
+                </div>
+
+                <a href="/" class="back-link">
+                    ← Back to Home
+                </a>
+
+                <div class="security-note">
+                    🔒 Secure access to your college community
+                </div>
+
+            </section>
         </div>
+    </main>
 
-        <div class="link">
-            <a href="{% url 'home' %}">Back to Home</a>
-        </div>
-    </div>
+    <footer>
+        © 2026 Smart College Connect | Your College, One Platform
+    </footer>
+
+    {% include 'core/floating_buttons.html' %}
+
+    <script>
+        const passwordInput = document.getElementById("password");
+        const toggleButton = document.getElementById("togglePassword");
+
+        toggleButton.addEventListener("click", function () {
+            const showPassword = passwordInput.type === "password";
+
+            passwordInput.type = showPassword ? "text" : "password";
+            toggleButton.textContent = showPassword ? "Hide" : "Show";
+
+            toggleButton.setAttribute(
+                "aria-pressed",
+                String(showPassword)
+            );
+
+            toggleButton.setAttribute(
+                "aria-label",
+                showPassword ? "Hide password" : "Show password"
+            );
+        });
+    </script>
+
 </body>
 </html>

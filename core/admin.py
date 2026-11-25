@@ -1,13 +1,13 @@
 
 from django.contrib import admin
 from .models import (
+    College,
     Profile,
     Announcement,
     StudyMaterial,
     Event,
     StudentActivity,
 )
-
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
@@ -39,3 +39,7 @@ class StudentActivityAdmin(admin.ModelAdmin):
     )
     list_filter = ("activity_type",)
     search_fields = ("title", "description")
+@admin.register(College)
+class CollegeAdmin(admin.ModelAdmin):
+    list_display = ("name", "code", "email")
+    search_fields = ("name", "code", "email")
